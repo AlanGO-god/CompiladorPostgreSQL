@@ -14,68 +14,13 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#stmtSelect.
-    def visitStmtSelect(self, ctx:PostgreSQLParser.StmtSelectContext):
+    # Visit a parse tree produced by PostgreSQLParser#stmt.
+    def visitStmt(self, ctx:PostgreSQLParser.StmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#stmtInsert.
-    def visitStmtInsert(self, ctx:PostgreSQLParser.StmtInsertContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtUpdate.
-    def visitStmtUpdate(self, ctx:PostgreSQLParser.StmtUpdateContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtDelete.
-    def visitStmtDelete(self, ctx:PostgreSQLParser.StmtDeleteContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtCreateTable.
-    def visitStmtCreateTable(self, ctx:PostgreSQLParser.StmtCreateTableContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtAlterTable.
-    def visitStmtAlterTable(self, ctx:PostgreSQLParser.StmtAlterTableContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtDropTable.
-    def visitStmtDropTable(self, ctx:PostgreSQLParser.StmtDropTableContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtCreateView.
-    def visitStmtCreateView(self, ctx:PostgreSQLParser.StmtCreateViewContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtDropView.
-    def visitStmtDropView(self, ctx:PostgreSQLParser.StmtDropViewContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtCreateIndex.
-    def visitStmtCreateIndex(self, ctx:PostgreSQLParser.StmtCreateIndexContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtDropIndex.
-    def visitStmtDropIndex(self, ctx:PostgreSQLParser.StmtDropIndexContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#stmtTransaction.
-    def visitStmtTransaction(self, ctx:PostgreSQLParser.StmtTransactionContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#selectStmt.
-    def visitSelectStmt(self, ctx:PostgreSQLParser.SelectStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaSelect.
+    def visitSentenciaSelect(self, ctx:PostgreSQLParser.SentenciaSelectContext):
         return self.visitChildren(ctx)
 
 
@@ -124,13 +69,8 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#targetStar.
-    def visitTargetStar(self, ctx:PostgreSQLParser.TargetStarContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#targetExpr.
-    def visitTargetExpr(self, ctx:PostgreSQLParser.TargetExprContext):
+    # Visit a parse tree produced by PostgreSQLParser#targetEl.
+    def visitTargetEl(self, ctx:PostgreSQLParser.TargetElContext):
         return self.visitChildren(ctx)
 
 
@@ -144,28 +84,13 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#joinedTable.
-    def visitJoinedTable(self, ctx:PostgreSQLParser.JoinedTableContext):
+    # Visit a parse tree produced by PostgreSQLParser#tableRef.
+    def visitTableRef(self, ctx:PostgreSQLParser.TableRefContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#plainTable.
-    def visitPlainTable(self, ctx:PostgreSQLParser.PlainTableContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#crossJoinedTable.
-    def visitCrossJoinedTable(self, ctx:PostgreSQLParser.CrossJoinedTableContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#namedTable.
-    def visitNamedTable(self, ctx:PostgreSQLParser.NamedTableContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#subqueryTable.
-    def visitSubqueryTable(self, ctx:PostgreSQLParser.SubqueryTableContext):
+    # Visit a parse tree produced by PostgreSQLParser#tablePrimary.
+    def visitTablePrimary(self, ctx:PostgreSQLParser.TablePrimaryContext):
         return self.visitChildren(ctx)
 
 
@@ -174,13 +99,8 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#joinOn.
-    def visitJoinOn(self, ctx:PostgreSQLParser.JoinOnContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#joinUsing.
-    def visitJoinUsing(self, ctx:PostgreSQLParser.JoinUsingContext):
+    # Visit a parse tree produced by PostgreSQLParser#joinQualifier.
+    def visitJoinQualifier(self, ctx:PostgreSQLParser.JoinQualifierContext):
         return self.visitChildren(ctx)
 
 
@@ -234,18 +154,13 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#insertStmt.
-    def visitInsertStmt(self, ctx:PostgreSQLParser.InsertStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaInsert.
+    def visitSentenciaInsert(self, ctx:PostgreSQLParser.SentenciaInsertContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#insertValues.
-    def visitInsertValues(self, ctx:PostgreSQLParser.InsertValuesContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#insertFromSelect.
-    def visitInsertFromSelect(self, ctx:PostgreSQLParser.InsertFromSelectContext):
+    # Visit a parse tree produced by PostgreSQLParser#insertSource.
+    def visitInsertSource(self, ctx:PostgreSQLParser.InsertSourceContext):
         return self.visitChildren(ctx)
 
 
@@ -264,8 +179,8 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#updateStmt.
-    def visitUpdateStmt(self, ctx:PostgreSQLParser.UpdateStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaUpdate.
+    def visitSentenciaUpdate(self, ctx:PostgreSQLParser.SentenciaUpdateContext):
         return self.visitChildren(ctx)
 
 
@@ -279,8 +194,8 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#deleteStmt.
-    def visitDeleteStmt(self, ctx:PostgreSQLParser.DeleteStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaDelete.
+    def visitSentenciaDelete(self, ctx:PostgreSQLParser.SentenciaDeleteContext):
         return self.visitChildren(ctx)
 
 
@@ -289,8 +204,8 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#createTableStmt.
-    def visitCreateTableStmt(self, ctx:PostgreSQLParser.CreateTableStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaCrearTabla.
+    def visitSentenciaCrearTabla(self, ctx:PostgreSQLParser.SentenciaCrearTablaContext):
         return self.visitChildren(ctx)
 
 
@@ -299,13 +214,8 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#tableElementColumn.
-    def visitTableElementColumn(self, ctx:PostgreSQLParser.TableElementColumnContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#tableElementConstraint.
-    def visitTableElementConstraint(self, ctx:PostgreSQLParser.TableElementConstraintContext):
+    # Visit a parse tree produced by PostgreSQLParser#tableElement.
+    def visitTableElement(self, ctx:PostgreSQLParser.TableElementContext):
         return self.visitChildren(ctx)
 
 
@@ -314,178 +224,23 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#colConstraintNotNull.
-    def visitColConstraintNotNull(self, ctx:PostgreSQLParser.ColConstraintNotNullContext):
+    # Visit a parse tree produced by PostgreSQLParser#columnConstraint.
+    def visitColumnConstraint(self, ctx:PostgreSQLParser.ColumnConstraintContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#colConstraintNull.
-    def visitColConstraintNull(self, ctx:PostgreSQLParser.ColConstraintNullContext):
+    # Visit a parse tree produced by PostgreSQLParser#tableConstraint.
+    def visitTableConstraint(self, ctx:PostgreSQLParser.TableConstraintContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#colConstraintDefault.
-    def visitColConstraintDefault(self, ctx:PostgreSQLParser.ColConstraintDefaultContext):
+    # Visit a parse tree produced by PostgreSQLParser#dataType.
+    def visitDataType(self, ctx:PostgreSQLParser.DataTypeContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#colConstraintPrimaryKey.
-    def visitColConstraintPrimaryKey(self, ctx:PostgreSQLParser.ColConstraintPrimaryKeyContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#colConstraintUnique.
-    def visitColConstraintUnique(self, ctx:PostgreSQLParser.ColConstraintUniqueContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#colConstraintCheck.
-    def visitColConstraintCheck(self, ctx:PostgreSQLParser.ColConstraintCheckContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#colConstraintReferences.
-    def visitColConstraintReferences(self, ctx:PostgreSQLParser.ColConstraintReferencesContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#tblConstraintPrimaryKey.
-    def visitTblConstraintPrimaryKey(self, ctx:PostgreSQLParser.TblConstraintPrimaryKeyContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#tblConstraintUnique.
-    def visitTblConstraintUnique(self, ctx:PostgreSQLParser.TblConstraintUniqueContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#tblConstraintForeignKey.
-    def visitTblConstraintForeignKey(self, ctx:PostgreSQLParser.TblConstraintForeignKeyContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#tblConstraintCheck.
-    def visitTblConstraintCheck(self, ctx:PostgreSQLParser.TblConstraintCheckContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#dataTypeBracketArray.
-    def visitDataTypeBracketArray(self, ctx:PostgreSQLParser.DataTypeBracketArrayContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#dataTypeKeywordArray.
-    def visitDataTypeKeywordArray(self, ctx:PostgreSQLParser.DataTypeKeywordArrayContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeInteger.
-    def visitTypeInteger(self, ctx:PostgreSQLParser.TypeIntegerContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeInt.
-    def visitTypeInt(self, ctx:PostgreSQLParser.TypeIntContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeSmallint.
-    def visitTypeSmallint(self, ctx:PostgreSQLParser.TypeSmallintContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeBigint.
-    def visitTypeBigint(self, ctx:PostgreSQLParser.TypeBigintContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeSerial.
-    def visitTypeSerial(self, ctx:PostgreSQLParser.TypeSerialContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeBigserial.
-    def visitTypeBigserial(self, ctx:PostgreSQLParser.TypeBigserialContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeNumeric.
-    def visitTypeNumeric(self, ctx:PostgreSQLParser.TypeNumericContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeReal.
-    def visitTypeReal(self, ctx:PostgreSQLParser.TypeRealContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeDouble.
-    def visitTypeDouble(self, ctx:PostgreSQLParser.TypeDoubleContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeFloat.
-    def visitTypeFloat(self, ctx:PostgreSQLParser.TypeFloatContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeVarchar.
-    def visitTypeVarchar(self, ctx:PostgreSQLParser.TypeVarcharContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeChar.
-    def visitTypeChar(self, ctx:PostgreSQLParser.TypeCharContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeText.
-    def visitTypeText(self, ctx:PostgreSQLParser.TypeTextContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeBoolean.
-    def visitTypeBoolean(self, ctx:PostgreSQLParser.TypeBooleanContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeDate.
-    def visitTypeDate(self, ctx:PostgreSQLParser.TypeDateContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeTime.
-    def visitTypeTime(self, ctx:PostgreSQLParser.TypeTimeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeTimestamp.
-    def visitTypeTimestamp(self, ctx:PostgreSQLParser.TypeTimestampContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeInterval.
-    def visitTypeInterval(self, ctx:PostgreSQLParser.TypeIntervalContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeUuid.
-    def visitTypeUuid(self, ctx:PostgreSQLParser.TypeUuidContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeJson.
-    def visitTypeJson(self, ctx:PostgreSQLParser.TypeJsonContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeBytea.
-    def visitTypeBytea(self, ctx:PostgreSQLParser.TypeByteaContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typeUserDefined.
-    def visitTypeUserDefined(self, ctx:PostgreSQLParser.TypeUserDefinedContext):
+    # Visit a parse tree produced by PostgreSQLParser#baseType.
+    def visitBaseType(self, ctx:PostgreSQLParser.BaseTypeContext):
         return self.visitChildren(ctx)
 
 
@@ -494,68 +249,23 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#alterTableStmt.
-    def visitAlterTableStmt(self, ctx:PostgreSQLParser.AlterTableStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaAlterTable.
+    def visitSentenciaAlterTable(self, ctx:PostgreSQLParser.SentenciaAlterTableContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#actionAddColumn.
-    def visitActionAddColumn(self, ctx:PostgreSQLParser.ActionAddColumnContext):
+    # Visit a parse tree produced by PostgreSQLParser#alterTableAction.
+    def visitAlterTableAction(self, ctx:PostgreSQLParser.AlterTableActionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#actionDropColumn.
-    def visitActionDropColumn(self, ctx:PostgreSQLParser.ActionDropColumnContext):
+    # Visit a parse tree produced by PostgreSQLParser#alterColumnAction.
+    def visitAlterColumnAction(self, ctx:PostgreSQLParser.AlterColumnActionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#actionAlterColumn.
-    def visitActionAlterColumn(self, ctx:PostgreSQLParser.ActionAlterColumnContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#actionAddConstraint.
-    def visitActionAddConstraint(self, ctx:PostgreSQLParser.ActionAddConstraintContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#actionRenameTable.
-    def visitActionRenameTable(self, ctx:PostgreSQLParser.ActionRenameTableContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#actionRenameColumn.
-    def visitActionRenameColumn(self, ctx:PostgreSQLParser.ActionRenameColumnContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#colActionSetDefault.
-    def visitColActionSetDefault(self, ctx:PostgreSQLParser.ColActionSetDefaultContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#colActionDropDefault.
-    def visitColActionDropDefault(self, ctx:PostgreSQLParser.ColActionDropDefaultContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#colActionSetNotNull.
-    def visitColActionSetNotNull(self, ctx:PostgreSQLParser.ColActionSetNotNullContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#colActionDropNotNull.
-    def visitColActionDropNotNull(self, ctx:PostgreSQLParser.ColActionDropNotNullContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#colActionSetType.
-    def visitColActionSetType(self, ctx:PostgreSQLParser.ColActionSetTypeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#dropTableStmt.
-    def visitDropTableStmt(self, ctx:PostgreSQLParser.DropTableStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaDropTable.
+    def visitSentenciaDropTable(self, ctx:PostgreSQLParser.SentenciaDropTableContext):
         return self.visitChildren(ctx)
 
 
@@ -564,18 +274,18 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#createViewStmt.
-    def visitCreateViewStmt(self, ctx:PostgreSQLParser.CreateViewStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaCreateView.
+    def visitSentenciaCreateView(self, ctx:PostgreSQLParser.SentenciaCreateViewContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#dropViewStmt.
-    def visitDropViewStmt(self, ctx:PostgreSQLParser.DropViewStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaDropView.
+    def visitSentenciaDropView(self, ctx:PostgreSQLParser.SentenciaDropViewContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#createIndexStmt.
-    def visitCreateIndexStmt(self, ctx:PostgreSQLParser.CreateIndexStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaCreateIndex.
+    def visitSentenciaCreateIndex(self, ctx:PostgreSQLParser.SentenciaCreateIndexContext):
         return self.visitChildren(ctx)
 
 
@@ -589,153 +299,18 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#dropIndexStmt.
-    def visitDropIndexStmt(self, ctx:PostgreSQLParser.DropIndexStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaDropIndex.
+    def visitSentenciaDropIndex(self, ctx:PostgreSQLParser.SentenciaDropIndexContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#beginStmt.
-    def visitBeginStmt(self, ctx:PostgreSQLParser.BeginStmtContext):
+    # Visit a parse tree produced by PostgreSQLParser#sentenciaTransaccion.
+    def visitSentenciaTransaccion(self, ctx:PostgreSQLParser.SentenciaTransaccionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PostgreSQLParser#commitStmt.
-    def visitCommitStmt(self, ctx:PostgreSQLParser.CommitStmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#rollbackStmt.
-    def visitRollbackStmt(self, ctx:PostgreSQLParser.RollbackStmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#savepointStmt.
-    def visitSavepointStmt(self, ctx:PostgreSQLParser.SavepointStmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#releaseStmt.
-    def visitReleaseStmt(self, ctx:PostgreSQLParser.ReleaseStmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#addSubExpr.
-    def visitAddSubExpr(self, ctx:PostgreSQLParser.AddSubExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#typecastExpr.
-    def visitTypecastExpr(self, ctx:PostgreSQLParser.TypecastExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#castExpr.
-    def visitCastExpr(self, ctx:PostgreSQLParser.CastExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#inExpr.
-    def visitInExpr(self, ctx:PostgreSQLParser.InExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#orExpr.
-    def visitOrExpr(self, ctx:PostgreSQLParser.OrExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#comparisonExpr.
-    def visitComparisonExpr(self, ctx:PostgreSQLParser.ComparisonExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#subqueryExpr.
-    def visitSubqueryExpr(self, ctx:PostgreSQLParser.SubqueryExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#columnRefExpr.
-    def visitColumnRefExpr(self, ctx:PostgreSQLParser.ColumnRefExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#arrayConstructorExpr.
-    def visitArrayConstructorExpr(self, ctx:PostgreSQLParser.ArrayConstructorExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#existsExpr.
-    def visitExistsExpr(self, ctx:PostgreSQLParser.ExistsExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#parenExpr.
-    def visitParenExpr(self, ctx:PostgreSQLParser.ParenExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#concatExpr.
-    def visitConcatExpr(self, ctx:PostgreSQLParser.ConcatExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#betweenExpr.
-    def visitBetweenExpr(self, ctx:PostgreSQLParser.BetweenExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#unaryExpr.
-    def visitUnaryExpr(self, ctx:PostgreSQLParser.UnaryExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#notExpr.
-    def visitNotExpr(self, ctx:PostgreSQLParser.NotExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#isDistinctExpr.
-    def visitIsDistinctExpr(self, ctx:PostgreSQLParser.IsDistinctExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#isNullExpr.
-    def visitIsNullExpr(self, ctx:PostgreSQLParser.IsNullExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#literalExpr.
-    def visitLiteralExpr(self, ctx:PostgreSQLParser.LiteralExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#functionCallExpr.
-    def visitFunctionCallExpr(self, ctx:PostgreSQLParser.FunctionCallExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#likeExpr.
-    def visitLikeExpr(self, ctx:PostgreSQLParser.LikeExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#caseExpr.
-    def visitCaseExpr(self, ctx:PostgreSQLParser.CaseExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#subqueryComparisonExpr.
-    def visitSubqueryComparisonExpr(self, ctx:PostgreSQLParser.SubqueryComparisonExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#mulDivExpr.
-    def visitMulDivExpr(self, ctx:PostgreSQLParser.MulDivExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#andExpr.
-    def visitAndExpr(self, ctx:PostgreSQLParser.AndExprContext):
+    # Visit a parse tree produced by PostgreSQLParser#expr.
+    def visitExpr(self, ctx:PostgreSQLParser.ExprContext):
         return self.visitChildren(ctx)
 
 
@@ -746,11 +321,6 @@ class PostgreSQLParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by PostgreSQLParser#whenClause.
     def visitWhenClause(self, ctx:PostgreSQLParser.WhenClauseContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by PostgreSQLParser#functionCall.
-    def visitFunctionCall(self, ctx:PostgreSQLParser.FunctionCallContext):
         return self.visitChildren(ctx)
 
 
