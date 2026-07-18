@@ -1,9 +1,8 @@
 import os
 import streamlit as st
-
 from archivo import Archivo
 from analizador_lexico import AnalizadorLexico
-
+from analizador_sintactico import AnalizadorSintactico
 
 CARPETA_EJEMPLOS = os.path.join(os.path.dirname(__file__), "ejemplos")
 
@@ -17,13 +16,14 @@ class App:
         )
 
         self.analizador_lexico = AnalizadorLexico()
+        self.analizador_sintactico = AnalizadorSintactico()
 
     def ejecutar(self):
         st.title("Compilador de PostgreSQL (emulado con ANTLR)")
         st.caption(
             "Proyecto academico - Lenguajes y Automatas 2 - ITC. "
-            "Cubre unicamente la fase lexica; no analiza sintaxis ni "
-            "hace validacion semantica del SQL."
+            "Cubre unicamente las fases lexica y sintactica; no ejecuta "
+            "ni valida semanticamente el SQL."
         )
 
         codigo = self._obtener_codigo_fuente()
@@ -35,19 +35,27 @@ class App:
         st.subheader("Codigo fuente")
         st.code(codigo, language="sql")
 
+        # --- Fase lexica ---
         self.analizador_lexico.analizar(codigo)
         tokens = self.analizador_lexico.obtener_tokens()
         errores_lexicos = self.analizador_lexico.obtener_errores()
 
-        pestana_tokens, pestana_errores = st.tabs(
-            ["Tokens (analisis lexico)", "Errores lexicos"]
+        # --- Fase sintactica ---
+        self.analizador_sintactico.analizar(codigo)
+        errores_sintacticos = self.analizador_sintactico.obtener_errores()
+
+        pestana_tokens, pestana_arbol, pestana_errores = st.tabs(
+            ["Tokens (analisis lexico)", "Arbol sintactico", "Errores"]
         )
 
         with pestana_tokens:
             self._mostrar_tokens(tokens)
 
+        with pestana_arbol:
+            self._mostrar_arbol()
+
         with pestana_errores:
-            self._mostrar_errores(errores_lexicos)
+            self._mostrar_errores(errores_lexicos, errores_sintacticos)
 
     def _obtener_codigo_fuente(self):
         st.sidebar.header("Codigo fuente")
@@ -118,13 +126,52 @@ class App:
             st.subheader("Tokens por categoria")
             st.bar_chart(resumen)
 
-    def _mostrar_errores(self, errores_lexicos):
+    # ------------------------------------------------------------
+    # Pestania: arbol sintactico (texto y grafico)
+    # ------------------------------------------------------------
+    def _mostrar_arbol(self):
+        st.subheader("Arbol sintactico (formato texto)")
+
+        arbol_texto = self.analizador_sintactico.obtener_arbol_texto()
+
+        if arbol_texto == "":
+            st.warning("No se genero arbol sintactico.")
+        else:
+            st.text_area("Arbol (notacion tipo LISP)", arbol_texto, height=200)
+
+        st.subheader("Arbol sintactico (grafico)")
+
+        mostrar_grafico = st.checkbox(
+            "Generar grafico del arbol (puede tardar en consultas muy largas)",
+            value=True,
+        )
+
+        if not mostrar_grafico:
+            return
+
+        grafo = self.analizador_sintactico.obtener_arbol_grafico()
+        st.graphviz_chart(grafo, use_container_width=True)
+
+        if self.analizador_sintactico.arbol_truncado:
+            st.info(
+                "El arbol se truncó para poder dibujarlo (la consulta genera "
+                "demasiados nodos). El texto de arriba sí muestra el arbol completo."
+            )
+
+    def _mostrar_errores(self, errores_lexicos, errores_sintacticos):
         st.subheader("Errores lexicos")
 
         if len(errores_lexicos) == 0:
             st.success("No hay errores lexicos.")
         else:
             st.dataframe(errores_lexicos, use_container_width=True)
+
+        st.subheader("Errores sintacticos")
+
+        if len(errores_sintacticos) == 0:
+            st.success("No hay errores sintacticos.")
+        else:
+            st.dataframe(errores_sintacticos, use_container_width=True)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-// Generated from c:/Users/gutie/Documents/Automatas2/Evidencias4/CompiladorPg/grammar/PostgreSQLLexer.g4 by ANTLR 4.13.1
+// Generated from c:/Users/lugor/OneDrive/Documentos/Proyecto LyA2_2/CompiladorPostgreSQL/grammar/PostgreSQLLexer.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
