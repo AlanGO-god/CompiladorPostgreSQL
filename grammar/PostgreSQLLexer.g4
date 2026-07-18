@@ -1,6 +1,6 @@
 lexer grammar PostgreSQLLexer;
 
-// ---- Consulta (DQL) ----
+// consultas
 SELECT: [Ss][Ee][Ll][Ee][Cc][Tt];
 FROM: [Ff][Rr][Oo][Mm];
 WHERE: [Ww][Hh][Ee][Rr][Ee];
@@ -38,7 +38,7 @@ ON: [Oo][Nn];
 USING: [Uu][Ss][Ii][Nn][Gg];
 ONLY: [Oo][Nn][Ll][Yy];
 
-// ---- Modificacion de datos (DML) ----
+// insert, update, delete
 INSERT: [Ii][Nn][Ss][Ee][Rr][Tt];
 VALUES: [Vv][Aa][Ll][Uu][Ee][Ss];
 UPDATE: [Uu][Pp][Dd][Aa][Tt][Ee];
@@ -46,7 +46,7 @@ SET: [Ss][Ee][Tt];
 DELETE: [Dd][Ee][Ll][Ee][Tt][Ee];
 RETURNING: [Rr][Ee][Tt][Uu][Rr][Nn][Ii][Nn][Gg];
 
-// ---- Definicion de datos (DDL) ----
+// DDL
 CREATE: [Cc][Rr][Ee][Aa][Tt][Ee];
 ALTER: [Aa][Ll][Tt][Ee][Rr];
 DROP: [Dd][Rr][Oo][Pp];
@@ -74,7 +74,7 @@ CHECK: [Cc][Hh][Ee][Cc][Kk];
 REPLACE: [Rr][Ee][Pp][Ll][Aa][Cc][Ee];
 TYPE: [Tt][Yy][Pp][Ee];
 
-// ---- Control de transacciones (TCL) ----
+// transacciones
 BEGIN: [Bb][Ee][Gg][Ii][Nn];
 COMMIT: [Cc][Oo][Mm][Mm][Ii][Tt];
 ROLLBACK: [Rr][Oo][Ll][Ll][Bb][Aa][Cc][Kk];
@@ -84,7 +84,7 @@ WORK: [Ww][Oo][Rr][Kk];
 SAVEPOINT: [Ss][Aa][Vv][Ee][Pp][Oo][Ii][Nn][Tt];
 RELEASE: [Rr][Ee][Ll][Ee][Aa][Ss][Ee];
 
-// ---- Expresiones logicas / condicionales ----
+// operaciones logicas 
 AND: [Aa][Nn][Dd];
 OR: [Oo][Rr];
 NOT: [Nn][Oo][Tt];
@@ -105,7 +105,7 @@ CAST: [Cc][Aa][Ss][Tt];
 ANY: [Aa][Nn][Yy];
 SOME: [Ss][Oo][Mm][Ee];
 
-// ---- Tipos de datos ----
+// tipos de datos 
 INTEGER: [Ii][Nn][Tt][Ee][Gg][Ee][Rr];
 INT: [Ii][Nn][Tt];
 SMALLINT: [Ss][Mm][Aa][Ll][Ll][Ii][Nn][Tt];
@@ -137,7 +137,7 @@ JSONB: [Jj][Ss][Oo][Nn][Bb];
 BYTEA: [Bb][Yy][Tt][Ee][Aa];
 ARRAY: [Aa][Rr][Rr][Aa][Yy];
 
-// ---- Comparacion ----
+// funciones de comparacion
 EQ: '=';
 NEQ: '<>' | '!=';
 LE: '<=';
@@ -145,18 +145,18 @@ GE: '>=';
 LT: '<';
 GT: '>';
 
-// ---- Aritmeticos ----
+// operadores aritmeticos 
 PLUS: '+';
 MINUS: '-';
 STAR: '*';
 SLASH: '/';
 PERCENT: '%';
 
-// ---- Cadenas / tipos ----
+// concatenacion y casteo
 CONCAT: '||';
 TYPECAST: '::';
 
-// ---- Puntuacion ----
+// puntuacion
 DOT: '.';
 COMMA: ',';
 SEMI: ';';
@@ -165,34 +165,29 @@ RPAREN: ')';
 LBRACKET: '[';
 RBRACKET: ']';
 
-// ---- Literales ----
 fragment DIGIT: [0-9];
 fragment EXPONENT: [eE] [+-]? DIGIT+;
 
-// Entero: 42, 0, 2024 (se llama INTEGER_LITERAL para no chocar con la palabra clave de tipo de dato
-// INTEGER)
 INTEGER_LITERAL: DIGIT+;
 
-// Numerico con punto decimal y/o exponente: 3.14, .5, 10e10, 2.5E-3 (se llama NUMERIC_LITERAL para
-// no chocar con la palabra clave de tipo de dato NUMERIC)
 NUMERIC_LITERAL:
 	DIGIT+ '.' DIGIT* EXPONENT?
 	| '.' DIGIT+ EXPONENT?
 	| DIGIT+ EXPONENT;
 
-// ---- Cadenas ----
+// cadenas
 STRING: '\'' ( '\'\'' | ~['])* '\'';
 ESTRING: [Ee] '\'' ( '\\' . | '\'\'' | ~['\\])* '\'';
 
-// Identificador entre comillas dobles (respeta mayusculas/minusculas): "Usuario"
+// identificadores (que estén entre comillas)
 QUOTED_IDENTIFIER: '"' ( '""' | ~["])* '"';
 
-// ---- Identificadores ----
+// identificadores
 IDENTIFIER: [a-zA-Z_] [a-zA-Z_0-9$]*;
 
-// ---- Cometarios ----
+// comentarios
 LINE_COMMENT: '--' ~[\r\n]* -> skip;
 BLOCK_COMMENT: '/*' .*? '*/' -> skip;
 
-// ---- WS ----
+// WS
 WS: [ \t\r\n]+ -> skip;

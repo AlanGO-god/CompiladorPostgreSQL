@@ -9,25 +9,21 @@ program
     ;
 
 stmt
-    : selectStmt         # stmtSelect
-    | insertStmt          # stmtInsert
-    | updateStmt           # stmtUpdate
-    | deleteStmt             # stmtDelete
-    | createTableStmt          # stmtCreateTable
-    | alterTableStmt             # stmtAlterTable
-    | dropTableStmt                # stmtDropTable
-    | createViewStmt                  # stmtCreateView
-    | dropViewStmt                       # stmtDropView
-    | createIndexStmt                       # stmtCreateIndex
-    | dropIndexStmt                            # stmtDropIndex
-    | transactionStmt                             # stmtTransaction
+    : sentenciaSelect
+    | sentenciaInsert
+    | sentenciaUpdate
+    | sentenciaDelete
+    | sentenciaCrearTabla
+    | sentenciaAlterTable
+    | sentenciaDropTable
+    | sentenciaCreateView
+    | sentenciaDropView
+    | sentenciaCreateIndex
+    | sentenciaDropIndex
+    | sentenciaTransaccion
     ;
 
-// ============================================================
-// 1) SELECT  (equivalente a SelectStmt / select_no_parens)
-// ============================================================
-
-selectStmt
+sentenciaSelect
     : withClause? selectNoParens
     ;
 
@@ -40,11 +36,9 @@ cteList
     ;
 
 commonTableExpr
-    : name=identifier (LPAREN columnList RPAREN)? AS LPAREN selectStmt RPAREN
+    : name=identifier (LPAREN columnList RPAREN)? AS LPAREN sentenciaSelect RPAREN
     ;
 
-// select_no_parens: permite UNION/INTERSECT/EXCEPT encadenados,
-// con ORDER BY / LIMIT / OFFSET aplicados al resultado final.
 selectNoParens
     : selectClause (setOperator selectClause)* sortClause? limitClause? offsetClause?
     ;
@@ -77,8 +71,8 @@ targetList
     ;
 
 targetEl
-    : STAR                              # targetStar
-    | expr (AS? columnLabel)?           # targetExpr
+    : STAR
+    | expr (AS? columnLabel)?
     ;
 
 fromClause
@@ -89,17 +83,15 @@ fromList
     : tableRef (COMMA tableRef)*
     ;
 
-// table_ref: soporta JOIN encadenados via recursion izquierda,
-// igual que la gramatica real de Postgres.
 tableRef
-    : tableRef joinType JOIN tableRef joinQualifier   # joinedTable
-    | tableRef CROSS JOIN tableRef                    # crossJoinedTable
-    | tablePrimary                                    # plainTable
+    : tableRef joinType JOIN tableRef joinQualifier   
+    | tableRef CROSS JOIN tableRef
+    | tablePrimary
     ;
 
 tablePrimary
-    : qualifiedName (AS? alias=identifier)?            # namedTable
-    | LPAREN selectStmt RPAREN AS? alias=identifier    # subqueryTable
+    : qualifiedName (AS? alias=identifier)?
+    | LPAREN sentenciaSelect RPAREN AS? alias=identifier
     ;
 
 joinType
@@ -110,8 +102,8 @@ joinType
     ;
 
 joinQualifier
-    : ON expr                              # joinOn
-    | USING LPAREN columnList RPAREN       # joinUsing
+    : ON expr
+    | USING LPAREN columnList RPAREN
     ;
 
 whereClause
@@ -126,7 +118,6 @@ havingClause
     : HAVING expr
     ;
 
-// WINDOW nombrado: WINDOW w AS (PARTITION BY ... ORDER BY ...)
 windowClause
     : WINDOW windowDefList
     ;
@@ -155,19 +146,15 @@ offsetClause
     : OFFSET INTEGER_LITERAL
     ;
 
-// ============================================================
-// 2) INSERT  (equivalente a InsertStmt)
-// ============================================================
-
-insertStmt
+sentenciaInsert
     : INSERT INTO qualifiedName (LPAREN columnList RPAREN)?
       insertSource
       returningClause?
     ;
 
 insertSource
-    : VALUES valuesList        # insertValues
-    | selectStmt                # insertFromSelect
+    : VALUES valuesList
+    | sentenciaSelect
     ;
 
 valuesList
@@ -182,11 +169,7 @@ returningClause
     : RETURNING targetList
     ;
 
-// ============================================================
-// 3) UPDATE  (equivalente a UpdateStmt)
-// ============================================================
-
-updateStmt
+sentenciaUpdate
     : UPDATE qualifiedName (AS? identifier)?
       SET setClauseList
       fromClause?
@@ -202,11 +185,7 @@ setClause
     : columnName EQ expr
     ;
 
-// ============================================================
-// 4) DELETE  (equivalente a DeleteStmt)
-// ============================================================
-
-deleteStmt
+sentenciaDelete
     : DELETE FROM ONLY? qualifiedName (AS? identifier)?
       usingClause?
       whereClause?
@@ -217,11 +196,7 @@ usingClause
     : USING fromList
     ;
 
-// ============================================================
-// 5) CREATE TABLE  (equivalente a CreateStmt)
-// ============================================================
-
-createTableStmt
+sentenciaCrearTabla
     : CREATE (TEMP | TEMPORARY)? TABLE (IF NOT EXISTS)? qualifiedName
       LPAREN tableElementList RPAREN
     ;
@@ -231,8 +206,8 @@ tableElementList
     ;
 
 tableElement
-    : columnDef          # tableElementColumn
-    | tableConstraint     # tableElementConstraint
+    : columnDef
+    | tableConstraint
     ;
 
 columnDef
@@ -240,90 +215,78 @@ columnDef
     ;
 
 columnConstraint
-    : NOT NULL                                              # colConstraintNotNull
-    | NULL                                                   # colConstraintNull
-    | DEFAULT expr                                            # colConstraintDefault
-    | PRIMARY KEY                                              # colConstraintPrimaryKey
-    | UNIQUE                                                    # colConstraintUnique
-    | CHECK LPAREN expr RPAREN                                   # colConstraintCheck
-    | REFERENCES qualifiedName (LPAREN columnName RPAREN)?         # colConstraintReferences
+    : NOT NULL
+    | NULL
+    | DEFAULT expr
+    | PRIMARY KEY
+    | UNIQUE
+    | CHECK LPAREN expr RPAREN
+    | REFERENCES qualifiedName (LPAREN columnName RPAREN)?
     ;
 
-// Nota: el prefijo opcional "CONSTRAINT nombre" se repite en cada
-// alternativa porque ANTLR4 solo permite etiquetar (#) alternativas
-// de nivel superior, no ramas anidadas dentro de un grupo.
 tableConstraint
-    : (CONSTRAINT identifier)? PRIMARY KEY LPAREN columnList RPAREN                                          # tblConstraintPrimaryKey
-    | (CONSTRAINT identifier)? UNIQUE LPAREN columnList RPAREN                                                # tblConstraintUnique
-    | (CONSTRAINT identifier)? FOREIGN KEY LPAREN columnList RPAREN REFERENCES qualifiedName (LPAREN columnList RPAREN)?  # tblConstraintForeignKey
-    | (CONSTRAINT identifier)? CHECK LPAREN expr RPAREN                                                        # tblConstraintCheck
+    : (CONSTRAINT identifier)? PRIMARY KEY LPAREN columnList RPAREN
+    | (CONSTRAINT identifier)? UNIQUE LPAREN columnList RPAREN
+    | (CONSTRAINT identifier)? FOREIGN KEY LPAREN columnList RPAREN REFERENCES qualifiedName (LPAREN columnList RPAREN)?
+    | (CONSTRAINT identifier)? CHECK LPAREN expr RPAREN
     ;
 
-// data_type / Typename simplificado
 dataType
-    : baseType (LBRACKET RBRACKET)*   # dataTypeBracketArray
-    | baseType ARRAY                   # dataTypeKeywordArray
+    : baseType (LBRACKET RBRACKET)*
+    | baseType ARRAY
     ;
 
 baseType
-    : INTEGER                                                     # typeInteger
-    | INT                                                          # typeInt
-    | SMALLINT                                                      # typeSmallint
-    | BIGINT                                                         # typeBigint
-    | SERIAL                                                          # typeSerial
-    | BIGSERIAL                                                        # typeBigserial
-    | (NUMERIC | DECIMAL) typeModifiers?                                # typeNumeric
-    | REAL                                                                # typeReal
-    | DOUBLE PRECISION                                                     # typeDouble
-    | FLOAT typeModifiers?                                                  # typeFloat
-    | (VARCHAR | CHARACTER VARYING) typeModifiers?                           # typeVarchar
-    | (CHAR | CHARACTER) typeModifiers?                                       # typeChar
-    | TEXT                                                                     # typeText
-    | (BOOLEAN | BOOL)                                                          # typeBoolean
-    | DATE                                                                       # typeDate
-    | TIME typeModifiers? ((WITH | WITHOUT) TIME ZONE)?                          # typeTime
-    | TIMESTAMP typeModifiers? ((WITH | WITHOUT) TIME ZONE)?                      # typeTimestamp
-    | INTERVAL                                                                     # typeInterval
-    | UUID                                                                          # typeUuid
-    | (JSON | JSONB)                                                                 # typeJson
-    | BYTEA                                                                           # typeBytea
-    | identifier                                                                       # typeUserDefined
+    : INTEGER
+    | INT
+    | SMALLINT
+    | BIGINT
+    | SERIAL
+    | BIGSERIAL
+    | (NUMERIC | DECIMAL) typeModifiers?
+    | REAL
+    | DOUBLE PRECISION
+    | FLOAT typeModifiers?
+    | (VARCHAR | CHARACTER VARYING) typeModifiers?
+    | (CHAR | CHARACTER) typeModifiers?
+    | TEXT
+    | (BOOLEAN | BOOL)
+    | DATE
+    | TIME typeModifiers? ((WITH | WITHOUT) TIME ZONE)?
+    | TIMESTAMP typeModifiers? ((WITH | WITHOUT) TIME ZONE)?
+    | INTERVAL
+    | UUID
+    | (JSON | JSONB)
+    | BYTEA
+    | identifier
     ;
 
 typeModifiers
     : LPAREN INTEGER_LITERAL (COMMA INTEGER_LITERAL)? RPAREN
     ;
 
-// ============================================================
-// 6) ALTER TABLE  (equivalente a AlterTableStmt)
-// ============================================================
-
-alterTableStmt
+sentenciaAlterTable
     : ALTER TABLE (IF EXISTS)? qualifiedName alterTableAction (COMMA alterTableAction)*
     ;
 
 alterTableAction
-    : ADD COLUMN? (IF NOT EXISTS)? columnDef                       # actionAddColumn
-    | DROP COLUMN? (IF EXISTS)? columnName (CASCADE | RESTRICT)?    # actionDropColumn
-    | ALTER COLUMN? columnName alterColumnAction                     # actionAlterColumn
-    | ADD tableConstraint                                              # actionAddConstraint
-    | RENAME TO newTable=identifier                                     # actionRenameTable
-    | RENAME COLUMN? columnName TO newColumn=identifier                  # actionRenameColumn
+    : ADD COLUMN? (IF NOT EXISTS)? columnDef
+    | DROP COLUMN? (IF EXISTS)? columnName (CASCADE | RESTRICT)?
+    | ALTER COLUMN? columnName alterColumnAction  
+    | ADD tableConstraint               
+    | RENAME TO newTable=identifier            
+    | RENAME COLUMN? columnName TO newColumn=identifier
     ;
 
 alterColumnAction
-    : SET DEFAULT expr    # colActionSetDefault
-    | DROP DEFAULT         # colActionDropDefault
-    | SET NOT NULL           # colActionSetNotNull
-    | DROP NOT NULL            # colActionDropNotNull
-    | TYPE dataType               # colActionSetType
+    : SET DEFAULT expr
+    | DROP DEFAULT
+    | SET NOT NULL
+    | DROP NOT NULL
+    | TYPE dataType
     ;
 
-// ============================================================
-// 7) DROP TABLE  (equivalente a DropStmt)
-// ============================================================
-
-dropTableStmt
+sentenciaDropTable
     : DROP TABLE (IF EXISTS)? qualifiedNameList (CASCADE | RESTRICT)?
     ;
 
@@ -331,23 +294,15 @@ qualifiedNameList
     : qualifiedName (COMMA qualifiedName)*
     ;
 
-// ============================================================
-// 8) CREATE / DROP VIEW  (equivalente a ViewStmt)
-// ============================================================
-
-createViewStmt
-    : CREATE (OR REPLACE)? VIEW qualifiedName (LPAREN columnList RPAREN)? AS selectStmt
+sentenciaCreateView
+    : CREATE (OR REPLACE)? VIEW qualifiedName (LPAREN columnList RPAREN)? AS sentenciaSelect
     ;
 
-dropViewStmt
+sentenciaDropView
     : DROP VIEW (IF EXISTS)? qualifiedNameList (CASCADE | RESTRICT)?
     ;
 
-// ============================================================
-// 9) CREATE / DROP INDEX  (equivalente a IndexStmt)
-// ============================================================
-
-createIndexStmt
+sentenciaCreateIndex
     : CREATE UNIQUE? INDEX (IF NOT EXISTS)? indexName=identifier? ON qualifiedName
       LPAREN indexColumnList RPAREN
       (WHERE expr)?
@@ -361,54 +316,42 @@ indexColumn
     : columnName (ASC | DESC)?
     ;
 
-dropIndexStmt
+sentenciaDropIndex
     : DROP INDEX (IF EXISTS)? qualifiedNameList
     ;
 
-// ============================================================
-// 10) CONTROL DE TRANSACCIONES  (equivalente a TransactionStmt)
-// ============================================================
-
-transactionStmt
-    : BEGIN (TRANSACTION | WORK)?                              # beginStmt
-    | COMMIT (TRANSACTION | WORK)?                              # commitStmt
-    | ROLLBACK (TRANSACTION | WORK)? (TO SAVEPOINT? identifier)? # rollbackStmt
-    | SAVEPOINT identifier                                        # savepointStmt
-    | RELEASE SAVEPOINT? identifier                                # releaseStmt
+sentenciaTransaccion
+    : BEGIN (TRANSACTION | WORK)?
+    | COMMIT (TRANSACTION | WORK)?
+    | ROLLBACK (TRANSACTION | WORK)? (TO SAVEPOINT? identifier)?
+    | SAVEPOINT identifier
+    | RELEASE SAVEPOINT? identifier
     ;
 
-// ============================================================
-// 11) EXPRESIONES  (equivalente a a_expr / b_expr / c_expr)
-//     Se usa recursion izquierda directa de ANTLR4: el orden de
-//     las alternativas define la precedencia (de mayor a menor),
-//     siguiendo aproximadamente la tabla de precedencia de
-//     operadores documentada por PostgreSQL.
-// ============================================================
-
 expr
-    : LPAREN expr RPAREN                                           # parenExpr
-    | LPAREN selectStmt RPAREN                                     # subqueryExpr
-    | CASE expr? whenClause+ (ELSE expr)? END                      # caseExpr
-    | CAST LPAREN expr AS dataType RPAREN                          # castExpr
-    | EXISTS LPAREN selectStmt RPAREN                              # existsExpr
-    | columnref                                                    # columnRefExpr
-    | literal                                                      # literalExpr
-    | expr TYPECAST dataType                                       # typecastExpr
-    | op=(PLUS | MINUS) expr                                       # unaryExpr
-    | expr op=(STAR | SLASH | PERCENT) expr                        # mulDivExpr
-    | expr op=(PLUS | MINUS) expr                                  # addSubExpr
-    | expr CONCAT expr                                             # concatExpr
-    | expr comparisonOperator expr                                 # comparisonExpr
-    | expr comparisonOperator (ANY | SOME | ALL) LPAREN selectStmt RPAREN  # subqueryComparisonExpr
-    | ARRAY LBRACKET exprList? RBRACKET                            # arrayConstructorExpr
-    | expr NOT? BETWEEN expr AND expr                              # betweenExpr
-    | expr NOT? IN LPAREN (exprList | selectStmt) RPAREN           # inExpr
-    | expr NOT? (LIKE | ILIKE) expr                                # likeExpr
-    | expr IS NOT? NULL                                            # isNullExpr
-    | expr IS NOT? DISTINCT FROM expr                              # isDistinctExpr
-    | NOT expr                                                     # notExpr
-    | expr AND expr                                                # andExpr
-    | expr OR expr                                                 # orExpr
+    : LPAREN expr RPAREN
+    | LPAREN sentenciaSelect RPAREN
+    | CASE expr? whenClause+ (ELSE expr)? END
+    | CAST LPAREN expr AS dataType RPAREN
+    | EXISTS LPAREN sentenciaSelect RPAREN
+    | columnref
+    | literal
+    | expr TYPECAST dataType
+    | op=(PLUS | MINUS) expr
+    | expr op=(STAR | SLASH | PERCENT) expr
+    | expr op=(PLUS | MINUS) expr
+    | expr CONCAT expr
+    | expr comparisonOperator expr
+    | expr comparisonOperator (ANY | SOME | ALL) LPAREN sentenciaSelect RPAREN
+    | ARRAY LBRACKET exprList? RBRACKET
+    | expr NOT? BETWEEN expr AND expr
+    | expr NOT? IN LPAREN (exprList | sentenciaSelect) RPAREN
+    | expr NOT? (LIKE | ILIKE) expr
+    | expr IS NOT? NULL
+    | expr IS NOT? DISTINCT FROM expr
+    | NOT expr
+    | expr AND expr
+    | expr OR expr
     ;
 
 comparisonOperator

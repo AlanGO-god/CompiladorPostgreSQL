@@ -39,7 +39,7 @@ public class PostgreSQLParser extends Parser {
 		NUMERIC_LITERAL=146, STRING=147, ESTRING=148, QUOTED_IDENTIFIER=149, IDENTIFIER=150, 
 		LINE_COMMENT=151, BLOCK_COMMENT=152, WS=153;
 	public static final int
-		RULE_program = 0, RULE_stmt = 1, RULE_selectStmt = 2, RULE_withClause = 3, 
+		RULE_program = 0, RULE_stmt = 1, RULE_sentenciaSelect = 2, RULE_withClause = 3, 
 		RULE_cteList = 4, RULE_commonTableExpr = 5, RULE_selectNoParens = 6, RULE_selectClause = 7, 
 		RULE_setOperator = 8, RULE_simpleSelect = 9, RULE_setQuantifier = 10, 
 		RULE_targetList = 11, RULE_targetEl = 12, RULE_fromClause = 13, RULE_fromList = 14, 
@@ -47,36 +47,38 @@ public class PostgreSQLParser extends Parser {
 		RULE_whereClause = 19, RULE_groupClause = 20, RULE_havingClause = 21, 
 		RULE_windowClause = 22, RULE_windowDefList = 23, RULE_windowDef = 24, 
 		RULE_sortClause = 25, RULE_sortSpec = 26, RULE_limitClause = 27, RULE_offsetClause = 28, 
-		RULE_insertStmt = 29, RULE_insertSource = 30, RULE_valuesList = 31, RULE_valuesRow = 32, 
-		RULE_returningClause = 33, RULE_updateStmt = 34, RULE_setClauseList = 35, 
-		RULE_setClause = 36, RULE_deleteStmt = 37, RULE_usingClause = 38, RULE_createTableStmt = 39, 
-		RULE_tableElementList = 40, RULE_tableElement = 41, RULE_columnDef = 42, 
-		RULE_columnConstraint = 43, RULE_tableConstraint = 44, RULE_dataType = 45, 
-		RULE_baseType = 46, RULE_typeModifiers = 47, RULE_alterTableStmt = 48, 
-		RULE_alterTableAction = 49, RULE_alterColumnAction = 50, RULE_dropTableStmt = 51, 
-		RULE_qualifiedNameList = 52, RULE_createViewStmt = 53, RULE_dropViewStmt = 54, 
-		RULE_createIndexStmt = 55, RULE_indexColumnList = 56, RULE_indexColumn = 57, 
-		RULE_dropIndexStmt = 58, RULE_transactionStmt = 59, RULE_expr = 60, RULE_comparisonOperator = 61, 
-		RULE_whenClause = 62, RULE_functionName = 63, RULE_overClause = 64, RULE_overClauseBody = 65, 
-		RULE_columnref = 66, RULE_qualifiedName = 67, RULE_columnName = 68, RULE_columnList = 69, 
-		RULE_exprList = 70, RULE_literal = 71, RULE_columnLabel = 72, RULE_identifier = 73;
+		RULE_sentenciaInsert = 29, RULE_insertSource = 30, RULE_valuesList = 31, 
+		RULE_valuesRow = 32, RULE_returningClause = 33, RULE_sentenciaUpdate = 34, 
+		RULE_setClauseList = 35, RULE_setClause = 36, RULE_sentenciaDelete = 37, 
+		RULE_usingClause = 38, RULE_sentenciaCrearTabla = 39, RULE_tableElementList = 40, 
+		RULE_tableElement = 41, RULE_columnDef = 42, RULE_columnConstraint = 43, 
+		RULE_tableConstraint = 44, RULE_dataType = 45, RULE_baseType = 46, RULE_typeModifiers = 47, 
+		RULE_sentenciaAlterTable = 48, RULE_alterTableAction = 49, RULE_alterColumnAction = 50, 
+		RULE_sentenciaDropTable = 51, RULE_qualifiedNameList = 52, RULE_sentenciaCreateView = 53, 
+		RULE_sentenciaDropView = 54, RULE_sentenciaCreateIndex = 55, RULE_indexColumnList = 56, 
+		RULE_indexColumn = 57, RULE_sentenciaDropIndex = 58, RULE_sentenciaTransaccion = 59, 
+		RULE_expr = 60, RULE_comparisonOperator = 61, RULE_whenClause = 62, RULE_functionName = 63, 
+		RULE_overClause = 64, RULE_overClauseBody = 65, RULE_columnref = 66, RULE_qualifiedName = 67, 
+		RULE_columnName = 68, RULE_columnList = 69, RULE_exprList = 70, RULE_literal = 71, 
+		RULE_columnLabel = 72, RULE_identifier = 73;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"program", "stmt", "selectStmt", "withClause", "cteList", "commonTableExpr", 
+			"program", "stmt", "sentenciaSelect", "withClause", "cteList", "commonTableExpr", 
 			"selectNoParens", "selectClause", "setOperator", "simpleSelect", "setQuantifier", 
 			"targetList", "targetEl", "fromClause", "fromList", "tableRef", "tablePrimary", 
 			"joinType", "joinQualifier", "whereClause", "groupClause", "havingClause", 
 			"windowClause", "windowDefList", "windowDef", "sortClause", "sortSpec", 
-			"limitClause", "offsetClause", "insertStmt", "insertSource", "valuesList", 
-			"valuesRow", "returningClause", "updateStmt", "setClauseList", "setClause", 
-			"deleteStmt", "usingClause", "createTableStmt", "tableElementList", "tableElement", 
-			"columnDef", "columnConstraint", "tableConstraint", "dataType", "baseType", 
-			"typeModifiers", "alterTableStmt", "alterTableAction", "alterColumnAction", 
-			"dropTableStmt", "qualifiedNameList", "createViewStmt", "dropViewStmt", 
-			"createIndexStmt", "indexColumnList", "indexColumn", "dropIndexStmt", 
-			"transactionStmt", "expr", "comparisonOperator", "whenClause", "functionName", 
-			"overClause", "overClauseBody", "columnref", "qualifiedName", "columnName", 
-			"columnList", "exprList", "literal", "columnLabel", "identifier"
+			"limitClause", "offsetClause", "sentenciaInsert", "insertSource", "valuesList", 
+			"valuesRow", "returningClause", "sentenciaUpdate", "setClauseList", "setClause", 
+			"sentenciaDelete", "usingClause", "sentenciaCrearTabla", "tableElementList", 
+			"tableElement", "columnDef", "columnConstraint", "tableConstraint", "dataType", 
+			"baseType", "typeModifiers", "sentenciaAlterTable", "alterTableAction", 
+			"alterColumnAction", "sentenciaDropTable", "qualifiedNameList", "sentenciaCreateView", 
+			"sentenciaDropView", "sentenciaCreateIndex", "indexColumnList", "indexColumn", 
+			"sentenciaDropIndex", "sentenciaTransaccion", "expr", "comparisonOperator", 
+			"whenClause", "functionName", "overClause", "overClauseBody", "columnref", 
+			"qualifiedName", "columnName", "columnList", "exprList", "literal", "columnLabel", 
+			"identifier"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -248,99 +250,46 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class StmtContext extends ParserRuleContext {
+		public SentenciaSelectContext sentenciaSelect() {
+			return getRuleContext(SentenciaSelectContext.class,0);
+		}
+		public SentenciaInsertContext sentenciaInsert() {
+			return getRuleContext(SentenciaInsertContext.class,0);
+		}
+		public SentenciaUpdateContext sentenciaUpdate() {
+			return getRuleContext(SentenciaUpdateContext.class,0);
+		}
+		public SentenciaDeleteContext sentenciaDelete() {
+			return getRuleContext(SentenciaDeleteContext.class,0);
+		}
+		public SentenciaCrearTablaContext sentenciaCrearTabla() {
+			return getRuleContext(SentenciaCrearTablaContext.class,0);
+		}
+		public SentenciaAlterTableContext sentenciaAlterTable() {
+			return getRuleContext(SentenciaAlterTableContext.class,0);
+		}
+		public SentenciaDropTableContext sentenciaDropTable() {
+			return getRuleContext(SentenciaDropTableContext.class,0);
+		}
+		public SentenciaCreateViewContext sentenciaCreateView() {
+			return getRuleContext(SentenciaCreateViewContext.class,0);
+		}
+		public SentenciaDropViewContext sentenciaDropView() {
+			return getRuleContext(SentenciaDropViewContext.class,0);
+		}
+		public SentenciaCreateIndexContext sentenciaCreateIndex() {
+			return getRuleContext(SentenciaCreateIndexContext.class,0);
+		}
+		public SentenciaDropIndexContext sentenciaDropIndex() {
+			return getRuleContext(SentenciaDropIndexContext.class,0);
+		}
+		public SentenciaTransaccionContext sentenciaTransaccion() {
+			return getRuleContext(SentenciaTransaccionContext.class,0);
+		}
 		public StmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_stmt; }
-	 
-		public StmtContext() { }
-		public void copyFrom(StmtContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtCreateIndexContext extends StmtContext {
-		public CreateIndexStmtContext createIndexStmt() {
-			return getRuleContext(CreateIndexStmtContext.class,0);
-		}
-		public StmtCreateIndexContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtDropTableContext extends StmtContext {
-		public DropTableStmtContext dropTableStmt() {
-			return getRuleContext(DropTableStmtContext.class,0);
-		}
-		public StmtDropTableContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtSelectContext extends StmtContext {
-		public SelectStmtContext selectStmt() {
-			return getRuleContext(SelectStmtContext.class,0);
-		}
-		public StmtSelectContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtDropViewContext extends StmtContext {
-		public DropViewStmtContext dropViewStmt() {
-			return getRuleContext(DropViewStmtContext.class,0);
-		}
-		public StmtDropViewContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtTransactionContext extends StmtContext {
-		public TransactionStmtContext transactionStmt() {
-			return getRuleContext(TransactionStmtContext.class,0);
-		}
-		public StmtTransactionContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtInsertContext extends StmtContext {
-		public InsertStmtContext insertStmt() {
-			return getRuleContext(InsertStmtContext.class,0);
-		}
-		public StmtInsertContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtUpdateContext extends StmtContext {
-		public UpdateStmtContext updateStmt() {
-			return getRuleContext(UpdateStmtContext.class,0);
-		}
-		public StmtUpdateContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtCreateTableContext extends StmtContext {
-		public CreateTableStmtContext createTableStmt() {
-			return getRuleContext(CreateTableStmtContext.class,0);
-		}
-		public StmtCreateTableContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtDropIndexContext extends StmtContext {
-		public DropIndexStmtContext dropIndexStmt() {
-			return getRuleContext(DropIndexStmtContext.class,0);
-		}
-		public StmtDropIndexContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtAlterTableContext extends StmtContext {
-		public AlterTableStmtContext alterTableStmt() {
-			return getRuleContext(AlterTableStmtContext.class,0);
-		}
-		public StmtAlterTableContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtDeleteContext extends StmtContext {
-		public DeleteStmtContext deleteStmt() {
-			return getRuleContext(DeleteStmtContext.class,0);
-		}
-		public StmtDeleteContext(StmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StmtCreateViewContext extends StmtContext {
-		public CreateViewStmtContext createViewStmt() {
-			return getRuleContext(CreateViewStmtContext.class,0);
-		}
-		public StmtCreateViewContext(StmtContext ctx) { copyFrom(ctx); }
 	}
 
 	public final StmtContext stmt() throws RecognitionException {
@@ -351,99 +300,87 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
-				_localctx = new StmtSelectContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(161);
-				selectStmt();
+				sentenciaSelect();
 				}
 				break;
 			case 2:
-				_localctx = new StmtInsertContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(162);
-				insertStmt();
+				sentenciaInsert();
 				}
 				break;
 			case 3:
-				_localctx = new StmtUpdateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(163);
-				updateStmt();
+				sentenciaUpdate();
 				}
 				break;
 			case 4:
-				_localctx = new StmtDeleteContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(164);
-				deleteStmt();
+				sentenciaDelete();
 				}
 				break;
 			case 5:
-				_localctx = new StmtCreateTableContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(165);
-				createTableStmt();
+				sentenciaCrearTabla();
 				}
 				break;
 			case 6:
-				_localctx = new StmtAlterTableContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(166);
-				alterTableStmt();
+				sentenciaAlterTable();
 				}
 				break;
 			case 7:
-				_localctx = new StmtDropTableContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(167);
-				dropTableStmt();
+				sentenciaDropTable();
 				}
 				break;
 			case 8:
-				_localctx = new StmtCreateViewContext(_localctx);
 				enterOuterAlt(_localctx, 8);
 				{
 				setState(168);
-				createViewStmt();
+				sentenciaCreateView();
 				}
 				break;
 			case 9:
-				_localctx = new StmtDropViewContext(_localctx);
 				enterOuterAlt(_localctx, 9);
 				{
 				setState(169);
-				dropViewStmt();
+				sentenciaDropView();
 				}
 				break;
 			case 10:
-				_localctx = new StmtCreateIndexContext(_localctx);
 				enterOuterAlt(_localctx, 10);
 				{
 				setState(170);
-				createIndexStmt();
+				sentenciaCreateIndex();
 				}
 				break;
 			case 11:
-				_localctx = new StmtDropIndexContext(_localctx);
 				enterOuterAlt(_localctx, 11);
 				{
 				setState(171);
-				dropIndexStmt();
+				sentenciaDropIndex();
 				}
 				break;
 			case 12:
-				_localctx = new StmtTransactionContext(_localctx);
 				enterOuterAlt(_localctx, 12);
 				{
 				setState(172);
-				transactionStmt();
+				sentenciaTransaccion();
 				}
 				break;
 			}
@@ -460,22 +397,22 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class SelectStmtContext extends ParserRuleContext {
+	public static class SentenciaSelectContext extends ParserRuleContext {
 		public SelectNoParensContext selectNoParens() {
 			return getRuleContext(SelectNoParensContext.class,0);
 		}
 		public WithClauseContext withClause() {
 			return getRuleContext(WithClauseContext.class,0);
 		}
-		public SelectStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaSelectContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_selectStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaSelect; }
 	}
 
-	public final SelectStmtContext selectStmt() throws RecognitionException {
-		SelectStmtContext _localctx = new SelectStmtContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_selectStmt);
+	public final SentenciaSelectContext sentenciaSelect() throws RecognitionException {
+		SentenciaSelectContext _localctx = new SentenciaSelectContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_sentenciaSelect);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -616,8 +553,8 @@ public class PostgreSQLParser extends Parser {
 		public TerminalNode LPAREN(int i) {
 			return getToken(PostgreSQLParser.LPAREN, i);
 		}
-		public SelectStmtContext selectStmt() {
-			return getRuleContext(SelectStmtContext.class,0);
+		public SentenciaSelectContext sentenciaSelect() {
+			return getRuleContext(SentenciaSelectContext.class,0);
 		}
 		public List<TerminalNode> RPAREN() { return getTokens(PostgreSQLParser.RPAREN); }
 		public TerminalNode RPAREN(int i) {
@@ -663,7 +600,7 @@ public class PostgreSQLParser extends Parser {
 			setState(202);
 			match(LPAREN);
 			setState(203);
-			selectStmt();
+			sentenciaSelect();
 			setState(204);
 			match(RPAREN);
 			}
@@ -1096,23 +1033,7 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class TargetElContext extends ParserRuleContext {
-		public TargetElContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_targetEl; }
-	 
-		public TargetElContext() { }
-		public void copyFrom(TargetElContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TargetStarContext extends TargetElContext {
 		public TerminalNode STAR() { return getToken(PostgreSQLParser.STAR, 0); }
-		public TargetStarContext(TargetElContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TargetExprContext extends TargetElContext {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
@@ -1120,7 +1041,10 @@ public class PostgreSQLParser extends Parser {
 			return getRuleContext(ColumnLabelContext.class,0);
 		}
 		public TerminalNode AS() { return getToken(PostgreSQLParser.AS, 0); }
-		public TargetExprContext(TargetElContext ctx) { copyFrom(ctx); }
+		public TargetElContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_targetEl; }
 	}
 
 	public final TargetElContext targetEl() throws RecognitionException {
@@ -1132,7 +1056,6 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STAR:
-				_localctx = new TargetStarContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(265);
@@ -1156,7 +1079,6 @@ public class PostgreSQLParser extends Parser {
 			case ESTRING:
 			case QUOTED_IDENTIFIER:
 			case IDENTIFIER:
-				_localctx = new TargetExprContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(266);
@@ -1291,42 +1213,9 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class TableRefContext extends ParserRuleContext {
-		public TableRefContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_tableRef; }
-	 
-		public TableRefContext() { }
-		public void copyFrom(TableRefContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class JoinedTableContext extends TableRefContext {
-		public List<TableRefContext> tableRef() {
-			return getRuleContexts(TableRefContext.class);
-		}
-		public TableRefContext tableRef(int i) {
-			return getRuleContext(TableRefContext.class,i);
-		}
-		public JoinTypeContext joinType() {
-			return getRuleContext(JoinTypeContext.class,0);
-		}
-		public TerminalNode JOIN() { return getToken(PostgreSQLParser.JOIN, 0); }
-		public JoinQualifierContext joinQualifier() {
-			return getRuleContext(JoinQualifierContext.class,0);
-		}
-		public JoinedTableContext(TableRefContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class PlainTableContext extends TableRefContext {
 		public TablePrimaryContext tablePrimary() {
 			return getRuleContext(TablePrimaryContext.class,0);
 		}
-		public PlainTableContext(TableRefContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class CrossJoinedTableContext extends TableRefContext {
 		public List<TableRefContext> tableRef() {
 			return getRuleContexts(TableRefContext.class);
 		}
@@ -1335,7 +1224,16 @@ public class PostgreSQLParser extends Parser {
 		}
 		public TerminalNode CROSS() { return getToken(PostgreSQLParser.CROSS, 0); }
 		public TerminalNode JOIN() { return getToken(PostgreSQLParser.JOIN, 0); }
-		public CrossJoinedTableContext(TableRefContext ctx) { copyFrom(ctx); }
+		public JoinTypeContext joinType() {
+			return getRuleContext(JoinTypeContext.class,0);
+		}
+		public JoinQualifierContext joinQualifier() {
+			return getRuleContext(JoinQualifierContext.class,0);
+		}
+		public TableRefContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_tableRef; }
 	}
 
 	public final TableRefContext tableRef() throws RecognitionException {
@@ -1354,10 +1252,6 @@ public class PostgreSQLParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			_localctx = new PlainTableContext(_localctx);
-			_ctx = _localctx;
-			_prevctx = _localctx;
-
 			setState(287);
 			tablePrimary();
 			}
@@ -1375,7 +1269,7 @@ public class PostgreSQLParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,24,_ctx) ) {
 					case 1:
 						{
-						_localctx = new CrossJoinedTableContext(new TableRefContext(_parentctx, _parentState));
+						_localctx = new TableRefContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_tableRef);
 						setState(289);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
@@ -1389,7 +1283,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new JoinedTableContext(new TableRefContext(_parentctx, _parentState));
+						_localctx = new TableRefContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_tableRef);
 						setState(293);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
@@ -1425,18 +1319,6 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class TablePrimaryContext extends ParserRuleContext {
-		public TablePrimaryContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_tablePrimary; }
-	 
-		public TablePrimaryContext() { }
-		public void copyFrom(TablePrimaryContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class NamedTableContext extends TablePrimaryContext {
 		public IdentifierContext alias;
 		public QualifiedNameContext qualifiedName() {
 			return getRuleContext(QualifiedNameContext.class,0);
@@ -1445,21 +1327,15 @@ public class PostgreSQLParser extends Parser {
 			return getRuleContext(IdentifierContext.class,0);
 		}
 		public TerminalNode AS() { return getToken(PostgreSQLParser.AS, 0); }
-		public NamedTableContext(TablePrimaryContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class SubqueryTableContext extends TablePrimaryContext {
-		public IdentifierContext alias;
 		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public SelectStmtContext selectStmt() {
-			return getRuleContext(SelectStmtContext.class,0);
+		public SentenciaSelectContext sentenciaSelect() {
+			return getRuleContext(SentenciaSelectContext.class,0);
 		}
 		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
+		public TablePrimaryContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
 		}
-		public TerminalNode AS() { return getToken(PostgreSQLParser.AS, 0); }
-		public SubqueryTableContext(TablePrimaryContext ctx) { copyFrom(ctx); }
+		@Override public int getRuleIndex() { return RULE_tablePrimary; }
 	}
 
 	public final TablePrimaryContext tablePrimary() throws RecognitionException {
@@ -1472,7 +1348,6 @@ public class PostgreSQLParser extends Parser {
 			switch (_input.LA(1)) {
 			case QUOTED_IDENTIFIER:
 			case IDENTIFIER:
-				_localctx = new NamedTableContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(304);
@@ -1493,20 +1368,19 @@ public class PostgreSQLParser extends Parser {
 					}
 
 					setState(308);
-					((NamedTableContext)_localctx).alias = identifier();
+					((TablePrimaryContext)_localctx).alias = identifier();
 					}
 					break;
 				}
 				}
 				break;
 			case LPAREN:
-				_localctx = new SubqueryTableContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(311);
 				match(LPAREN);
 				setState(312);
-				selectStmt();
+				sentenciaSelect();
 				setState(313);
 				match(RPAREN);
 				setState(315);
@@ -1520,7 +1394,7 @@ public class PostgreSQLParser extends Parser {
 				}
 
 				setState(317);
-				((SubqueryTableContext)_localctx).alias = identifier();
+				((TablePrimaryContext)_localctx).alias = identifier();
 				}
 				break;
 			default:
@@ -1643,33 +1517,20 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class JoinQualifierContext extends ParserRuleContext {
-		public JoinQualifierContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
+		public TerminalNode ON() { return getToken(PostgreSQLParser.ON, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
 		}
-		@Override public int getRuleIndex() { return RULE_joinQualifier; }
-	 
-		public JoinQualifierContext() { }
-		public void copyFrom(JoinQualifierContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class JoinUsingContext extends JoinQualifierContext {
 		public TerminalNode USING() { return getToken(PostgreSQLParser.USING, 0); }
 		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
 		public ColumnListContext columnList() {
 			return getRuleContext(ColumnListContext.class,0);
 		}
 		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public JoinUsingContext(JoinQualifierContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class JoinOnContext extends JoinQualifierContext {
-		public TerminalNode ON() { return getToken(PostgreSQLParser.ON, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public JoinQualifierContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
 		}
-		public JoinOnContext(JoinQualifierContext ctx) { copyFrom(ctx); }
+		@Override public int getRuleIndex() { return RULE_joinQualifier; }
 	}
 
 	public final JoinQualifierContext joinQualifier() throws RecognitionException {
@@ -1680,7 +1541,6 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ON:
-				_localctx = new JoinOnContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(338);
@@ -1690,7 +1550,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case USING:
-				_localctx = new JoinUsingContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(340);
@@ -2202,7 +2061,7 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class InsertStmtContext extends ParserRuleContext {
+	public static class SentenciaInsertContext extends ParserRuleContext {
 		public TerminalNode INSERT() { return getToken(PostgreSQLParser.INSERT, 0); }
 		public TerminalNode INTO() { return getToken(PostgreSQLParser.INTO, 0); }
 		public QualifiedNameContext qualifiedName() {
@@ -2219,15 +2078,15 @@ public class PostgreSQLParser extends Parser {
 		public ReturningClauseContext returningClause() {
 			return getRuleContext(ReturningClauseContext.class,0);
 		}
-		public InsertStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaInsertContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_insertStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaInsert; }
 	}
 
-	public final InsertStmtContext insertStmt() throws RecognitionException {
-		InsertStmtContext _localctx = new InsertStmtContext(_ctx, getState());
-		enterRule(_localctx, 58, RULE_insertStmt);
+	public final SentenciaInsertContext sentenciaInsert() throws RecognitionException {
+		SentenciaInsertContext _localctx = new SentenciaInsertContext(_ctx, getState());
+		enterRule(_localctx, 58, RULE_sentenciaInsert);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -2279,30 +2138,17 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class InsertSourceContext extends ParserRuleContext {
-		public InsertSourceContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_insertSource; }
-	 
-		public InsertSourceContext() { }
-		public void copyFrom(InsertSourceContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class InsertFromSelectContext extends InsertSourceContext {
-		public SelectStmtContext selectStmt() {
-			return getRuleContext(SelectStmtContext.class,0);
-		}
-		public InsertFromSelectContext(InsertSourceContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class InsertValuesContext extends InsertSourceContext {
 		public TerminalNode VALUES() { return getToken(PostgreSQLParser.VALUES, 0); }
 		public ValuesListContext valuesList() {
 			return getRuleContext(ValuesListContext.class,0);
 		}
-		public InsertValuesContext(InsertSourceContext ctx) { copyFrom(ctx); }
+		public SentenciaSelectContext sentenciaSelect() {
+			return getRuleContext(SentenciaSelectContext.class,0);
+		}
+		public InsertSourceContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_insertSource; }
 	}
 
 	public final InsertSourceContext insertSource() throws RecognitionException {
@@ -2313,7 +2159,6 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case VALUES:
-				_localctx = new InsertValuesContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(417);
@@ -2325,11 +2170,10 @@ public class PostgreSQLParser extends Parser {
 			case SELECT:
 			case WITH:
 			case LPAREN:
-				_localctx = new InsertFromSelectContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(419);
-				selectStmt();
+				sentenciaSelect();
 				}
 				break;
 			default:
@@ -2477,7 +2321,7 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class UpdateStmtContext extends ParserRuleContext {
+	public static class SentenciaUpdateContext extends ParserRuleContext {
 		public TerminalNode UPDATE() { return getToken(PostgreSQLParser.UPDATE, 0); }
 		public QualifiedNameContext qualifiedName() {
 			return getRuleContext(QualifiedNameContext.class,0);
@@ -2499,15 +2343,15 @@ public class PostgreSQLParser extends Parser {
 			return getRuleContext(ReturningClauseContext.class,0);
 		}
 		public TerminalNode AS() { return getToken(PostgreSQLParser.AS, 0); }
-		public UpdateStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaUpdateContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_updateStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaUpdate; }
 	}
 
-	public final UpdateStmtContext updateStmt() throws RecognitionException {
-		UpdateStmtContext _localctx = new UpdateStmtContext(_ctx, getState());
-		enterRule(_localctx, 68, RULE_updateStmt);
+	public final SentenciaUpdateContext sentenciaUpdate() throws RecognitionException {
+		SentenciaUpdateContext _localctx = new SentenciaUpdateContext(_ctx, getState());
+		enterRule(_localctx, 68, RULE_sentenciaUpdate);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -2680,7 +2524,7 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class DeleteStmtContext extends ParserRuleContext {
+	public static class SentenciaDeleteContext extends ParserRuleContext {
 		public TerminalNode DELETE() { return getToken(PostgreSQLParser.DELETE, 0); }
 		public TerminalNode FROM() { return getToken(PostgreSQLParser.FROM, 0); }
 		public QualifiedNameContext qualifiedName() {
@@ -2700,15 +2544,15 @@ public class PostgreSQLParser extends Parser {
 			return getRuleContext(ReturningClauseContext.class,0);
 		}
 		public TerminalNode AS() { return getToken(PostgreSQLParser.AS, 0); }
-		public DeleteStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaDeleteContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_deleteStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaDelete; }
 	}
 
-	public final DeleteStmtContext deleteStmt() throws RecognitionException {
-		DeleteStmtContext _localctx = new DeleteStmtContext(_ctx, getState());
-		enterRule(_localctx, 74, RULE_deleteStmt);
+	public final SentenciaDeleteContext sentenciaDelete() throws RecognitionException {
+		SentenciaDeleteContext _localctx = new SentenciaDeleteContext(_ctx, getState());
+		enterRule(_localctx, 74, RULE_sentenciaDelete);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -2828,7 +2672,7 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class CreateTableStmtContext extends ParserRuleContext {
+	public static class SentenciaCrearTablaContext extends ParserRuleContext {
 		public TerminalNode CREATE() { return getToken(PostgreSQLParser.CREATE, 0); }
 		public TerminalNode TABLE() { return getToken(PostgreSQLParser.TABLE, 0); }
 		public QualifiedNameContext qualifiedName() {
@@ -2844,15 +2688,15 @@ public class PostgreSQLParser extends Parser {
 		public TerminalNode EXISTS() { return getToken(PostgreSQLParser.EXISTS, 0); }
 		public TerminalNode TEMP() { return getToken(PostgreSQLParser.TEMP, 0); }
 		public TerminalNode TEMPORARY() { return getToken(PostgreSQLParser.TEMPORARY, 0); }
-		public CreateTableStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaCrearTablaContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_createTableStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaCrearTabla; }
 	}
 
-	public final CreateTableStmtContext createTableStmt() throws RecognitionException {
-		CreateTableStmtContext _localctx = new CreateTableStmtContext(_ctx, getState());
-		enterRule(_localctx, 78, RULE_createTableStmt);
+	public final SentenciaCrearTablaContext sentenciaCrearTabla() throws RecognitionException {
+		SentenciaCrearTablaContext _localctx = new SentenciaCrearTablaContext(_ctx, getState());
+		enterRule(_localctx, 78, RULE_sentenciaCrearTabla);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -2972,29 +2816,16 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class TableElementContext extends ParserRuleContext {
+		public ColumnDefContext columnDef() {
+			return getRuleContext(ColumnDefContext.class,0);
+		}
+		public TableConstraintContext tableConstraint() {
+			return getRuleContext(TableConstraintContext.class,0);
+		}
 		public TableElementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_tableElement; }
-	 
-		public TableElementContext() { }
-		public void copyFrom(TableElementContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TableElementConstraintContext extends TableElementContext {
-		public TableConstraintContext tableConstraint() {
-			return getRuleContext(TableConstraintContext.class,0);
-		}
-		public TableElementConstraintContext(TableElementContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TableElementColumnContext extends TableElementContext {
-		public ColumnDefContext columnDef() {
-			return getRuleContext(ColumnDefContext.class,0);
-		}
-		public TableElementColumnContext(TableElementContext ctx) { copyFrom(ctx); }
 	}
 
 	public final TableElementContext tableElement() throws RecognitionException {
@@ -3006,7 +2837,6 @@ public class PostgreSQLParser extends Parser {
 			switch (_input.LA(1)) {
 			case QUOTED_IDENTIFIER:
 			case IDENTIFIER:
-				_localctx = new TableElementColumnContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(515);
@@ -3018,7 +2848,6 @@ public class PostgreSQLParser extends Parser {
 			case FOREIGN:
 			case UNIQUE:
 			case CHECK:
-				_localctx = new TableElementConstraintContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(516);
@@ -3100,68 +2929,29 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ColumnConstraintContext extends ParserRuleContext {
-		public ColumnConstraintContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_columnConstraint; }
-	 
-		public ColumnConstraintContext() { }
-		public void copyFrom(ColumnConstraintContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColConstraintPrimaryKeyContext extends ColumnConstraintContext {
-		public TerminalNode PRIMARY() { return getToken(PostgreSQLParser.PRIMARY, 0); }
-		public TerminalNode KEY() { return getToken(PostgreSQLParser.KEY, 0); }
-		public ColConstraintPrimaryKeyContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColConstraintReferencesContext extends ColumnConstraintContext {
-		public TerminalNode REFERENCES() { return getToken(PostgreSQLParser.REFERENCES, 0); }
-		public QualifiedNameContext qualifiedName() {
-			return getRuleContext(QualifiedNameContext.class,0);
-		}
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public ColumnNameContext columnName() {
-			return getRuleContext(ColumnNameContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public ColConstraintReferencesContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColConstraintNotNullContext extends ColumnConstraintContext {
 		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
 		public TerminalNode NULL() { return getToken(PostgreSQLParser.NULL, 0); }
-		public ColConstraintNotNullContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColConstraintCheckContext extends ColumnConstraintContext {
-		public TerminalNode CHECK() { return getToken(PostgreSQLParser.CHECK, 0); }
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public ColConstraintCheckContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColConstraintDefaultContext extends ColumnConstraintContext {
 		public TerminalNode DEFAULT() { return getToken(PostgreSQLParser.DEFAULT, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
-		public ColConstraintDefaultContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColConstraintUniqueContext extends ColumnConstraintContext {
+		public TerminalNode PRIMARY() { return getToken(PostgreSQLParser.PRIMARY, 0); }
+		public TerminalNode KEY() { return getToken(PostgreSQLParser.KEY, 0); }
 		public TerminalNode UNIQUE() { return getToken(PostgreSQLParser.UNIQUE, 0); }
-		public ColConstraintUniqueContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColConstraintNullContext extends ColumnConstraintContext {
-		public TerminalNode NULL() { return getToken(PostgreSQLParser.NULL, 0); }
-		public ColConstraintNullContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
+		public TerminalNode CHECK() { return getToken(PostgreSQLParser.CHECK, 0); }
+		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
+		public TerminalNode REFERENCES() { return getToken(PostgreSQLParser.REFERENCES, 0); }
+		public QualifiedNameContext qualifiedName() {
+			return getRuleContext(QualifiedNameContext.class,0);
+		}
+		public ColumnNameContext columnName() {
+			return getRuleContext(ColumnNameContext.class,0);
+		}
+		public ColumnConstraintContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_columnConstraint; }
 	}
 
 	public final ColumnConstraintContext columnConstraint() throws RecognitionException {
@@ -3173,7 +2963,6 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NOT:
-				_localctx = new ColConstraintNotNullContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(527);
@@ -3183,7 +2972,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case NULL:
-				_localctx = new ColConstraintNullContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(529);
@@ -3191,7 +2979,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case DEFAULT:
-				_localctx = new ColConstraintDefaultContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(530);
@@ -3201,7 +2988,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case PRIMARY:
-				_localctx = new ColConstraintPrimaryKeyContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(532);
@@ -3211,7 +2997,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case UNIQUE:
-				_localctx = new ColConstraintUniqueContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(534);
@@ -3219,7 +3004,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case CHECK:
-				_localctx = new ColConstraintCheckContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(535);
@@ -3233,7 +3017,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case REFERENCES:
-				_localctx = new ColConstraintReferencesContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(540);
@@ -3273,62 +3056,7 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class TableConstraintContext extends ParserRuleContext {
-		public TableConstraintContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_tableConstraint; }
-	 
-		public TableConstraintContext() { }
-		public void copyFrom(TableConstraintContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TblConstraintPrimaryKeyContext extends TableConstraintContext {
 		public TerminalNode PRIMARY() { return getToken(PostgreSQLParser.PRIMARY, 0); }
-		public TerminalNode KEY() { return getToken(PostgreSQLParser.KEY, 0); }
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public ColumnListContext columnList() {
-			return getRuleContext(ColumnListContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public TerminalNode CONSTRAINT() { return getToken(PostgreSQLParser.CONSTRAINT, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
-		public TblConstraintPrimaryKeyContext(TableConstraintContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TblConstraintUniqueContext extends TableConstraintContext {
-		public TerminalNode UNIQUE() { return getToken(PostgreSQLParser.UNIQUE, 0); }
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public ColumnListContext columnList() {
-			return getRuleContext(ColumnListContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public TerminalNode CONSTRAINT() { return getToken(PostgreSQLParser.CONSTRAINT, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
-		public TblConstraintUniqueContext(TableConstraintContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TblConstraintCheckContext extends TableConstraintContext {
-		public TerminalNode CHECK() { return getToken(PostgreSQLParser.CHECK, 0); }
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public TerminalNode CONSTRAINT() { return getToken(PostgreSQLParser.CONSTRAINT, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
-		public TblConstraintCheckContext(TableConstraintContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TblConstraintForeignKeyContext extends TableConstraintContext {
-		public TerminalNode FOREIGN() { return getToken(PostgreSQLParser.FOREIGN, 0); }
 		public TerminalNode KEY() { return getToken(PostgreSQLParser.KEY, 0); }
 		public List<TerminalNode> LPAREN() { return getTokens(PostgreSQLParser.LPAREN); }
 		public TerminalNode LPAREN(int i) {
@@ -3344,15 +3072,24 @@ public class PostgreSQLParser extends Parser {
 		public TerminalNode RPAREN(int i) {
 			return getToken(PostgreSQLParser.RPAREN, i);
 		}
-		public TerminalNode REFERENCES() { return getToken(PostgreSQLParser.REFERENCES, 0); }
-		public QualifiedNameContext qualifiedName() {
-			return getRuleContext(QualifiedNameContext.class,0);
-		}
 		public TerminalNode CONSTRAINT() { return getToken(PostgreSQLParser.CONSTRAINT, 0); }
 		public IdentifierContext identifier() {
 			return getRuleContext(IdentifierContext.class,0);
 		}
-		public TblConstraintForeignKeyContext(TableConstraintContext ctx) { copyFrom(ctx); }
+		public TerminalNode UNIQUE() { return getToken(PostgreSQLParser.UNIQUE, 0); }
+		public TerminalNode FOREIGN() { return getToken(PostgreSQLParser.FOREIGN, 0); }
+		public TerminalNode REFERENCES() { return getToken(PostgreSQLParser.REFERENCES, 0); }
+		public QualifiedNameContext qualifiedName() {
+			return getRuleContext(QualifiedNameContext.class,0);
+		}
+		public TerminalNode CHECK() { return getToken(PostgreSQLParser.CHECK, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public TableConstraintContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_tableConstraint; }
 	}
 
 	public final TableConstraintContext tableConstraint() throws RecognitionException {
@@ -3364,7 +3101,6 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,69,_ctx) ) {
 			case 1:
-				_localctx = new TblConstraintPrimaryKeyContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(552);
@@ -3392,7 +3128,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new TblConstraintUniqueContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(562);
@@ -3418,7 +3153,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 3:
-				_localctx = new TblConstraintForeignKeyContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(571);
@@ -3464,7 +3198,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 4:
-				_localctx = new TblConstraintCheckContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(588);
@@ -3504,18 +3237,6 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class DataTypeContext extends ParserRuleContext {
-		public DataTypeContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_dataType; }
-	 
-		public DataTypeContext() { }
-		public void copyFrom(DataTypeContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class DataTypeBracketArrayContext extends DataTypeContext {
 		public BaseTypeContext baseType() {
 			return getRuleContext(BaseTypeContext.class,0);
 		}
@@ -3527,15 +3248,11 @@ public class PostgreSQLParser extends Parser {
 		public TerminalNode RBRACKET(int i) {
 			return getToken(PostgreSQLParser.RBRACKET, i);
 		}
-		public DataTypeBracketArrayContext(DataTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class DataTypeKeywordArrayContext extends DataTypeContext {
-		public BaseTypeContext baseType() {
-			return getRuleContext(BaseTypeContext.class,0);
-		}
 		public TerminalNode ARRAY() { return getToken(PostgreSQLParser.ARRAY, 0); }
-		public DataTypeKeywordArrayContext(DataTypeContext ctx) { copyFrom(ctx); }
+		public DataTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_dataType; }
 	}
 
 	public final DataTypeContext dataType() throws RecognitionException {
@@ -3547,7 +3264,6 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,71,_ctx) ) {
 			case 1:
-				_localctx = new DataTypeBracketArrayContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(597);
@@ -3573,7 +3289,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new DataTypeKeywordArrayContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(605);
@@ -3597,162 +3312,49 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class BaseTypeContext extends ParserRuleContext {
-		public BaseTypeContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_baseType; }
-	 
-		public BaseTypeContext() { }
-		public void copyFrom(BaseTypeContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeDateContext extends BaseTypeContext {
-		public TerminalNode DATE() { return getToken(PostgreSQLParser.DATE, 0); }
-		public TypeDateContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeByteaContext extends BaseTypeContext {
-		public TerminalNode BYTEA() { return getToken(PostgreSQLParser.BYTEA, 0); }
-		public TypeByteaContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeTimestampContext extends BaseTypeContext {
-		public TerminalNode TIMESTAMP() { return getToken(PostgreSQLParser.TIMESTAMP, 0); }
-		public TypeModifiersContext typeModifiers() {
-			return getRuleContext(TypeModifiersContext.class,0);
-		}
-		public TerminalNode TIME() { return getToken(PostgreSQLParser.TIME, 0); }
-		public TerminalNode ZONE() { return getToken(PostgreSQLParser.ZONE, 0); }
-		public TerminalNode WITH() { return getToken(PostgreSQLParser.WITH, 0); }
-		public TerminalNode WITHOUT() { return getToken(PostgreSQLParser.WITHOUT, 0); }
-		public TypeTimestampContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeUuidContext extends BaseTypeContext {
-		public TerminalNode UUID() { return getToken(PostgreSQLParser.UUID, 0); }
-		public TypeUuidContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeIntegerContext extends BaseTypeContext {
 		public TerminalNode INTEGER() { return getToken(PostgreSQLParser.INTEGER, 0); }
-		public TypeIntegerContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeNumericContext extends BaseTypeContext {
+		public TerminalNode INT() { return getToken(PostgreSQLParser.INT, 0); }
+		public TerminalNode SMALLINT() { return getToken(PostgreSQLParser.SMALLINT, 0); }
+		public TerminalNode BIGINT() { return getToken(PostgreSQLParser.BIGINT, 0); }
+		public TerminalNode SERIAL() { return getToken(PostgreSQLParser.SERIAL, 0); }
+		public TerminalNode BIGSERIAL() { return getToken(PostgreSQLParser.BIGSERIAL, 0); }
 		public TerminalNode NUMERIC() { return getToken(PostgreSQLParser.NUMERIC, 0); }
 		public TerminalNode DECIMAL() { return getToken(PostgreSQLParser.DECIMAL, 0); }
 		public TypeModifiersContext typeModifiers() {
 			return getRuleContext(TypeModifiersContext.class,0);
 		}
-		public TypeNumericContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeUserDefinedContext extends BaseTypeContext {
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
-		public TypeUserDefinedContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeJsonContext extends BaseTypeContext {
-		public TerminalNode JSON() { return getToken(PostgreSQLParser.JSON, 0); }
-		public TerminalNode JSONB() { return getToken(PostgreSQLParser.JSONB, 0); }
-		public TypeJsonContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeIntervalContext extends BaseTypeContext {
-		public TerminalNode INTERVAL() { return getToken(PostgreSQLParser.INTERVAL, 0); }
-		public TypeIntervalContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeSmallintContext extends BaseTypeContext {
-		public TerminalNode SMALLINT() { return getToken(PostgreSQLParser.SMALLINT, 0); }
-		public TypeSmallintContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeSerialContext extends BaseTypeContext {
-		public TerminalNode SERIAL() { return getToken(PostgreSQLParser.SERIAL, 0); }
-		public TypeSerialContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeVarcharContext extends BaseTypeContext {
+		public TerminalNode REAL() { return getToken(PostgreSQLParser.REAL, 0); }
+		public TerminalNode DOUBLE() { return getToken(PostgreSQLParser.DOUBLE, 0); }
+		public TerminalNode PRECISION() { return getToken(PostgreSQLParser.PRECISION, 0); }
+		public TerminalNode FLOAT() { return getToken(PostgreSQLParser.FLOAT, 0); }
 		public TerminalNode VARCHAR() { return getToken(PostgreSQLParser.VARCHAR, 0); }
 		public TerminalNode CHARACTER() { return getToken(PostgreSQLParser.CHARACTER, 0); }
 		public TerminalNode VARYING() { return getToken(PostgreSQLParser.VARYING, 0); }
-		public TypeModifiersContext typeModifiers() {
-			return getRuleContext(TypeModifiersContext.class,0);
-		}
-		public TypeVarcharContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeIntContext extends BaseTypeContext {
-		public TerminalNode INT() { return getToken(PostgreSQLParser.INT, 0); }
-		public TypeIntContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeFloatContext extends BaseTypeContext {
-		public TerminalNode FLOAT() { return getToken(PostgreSQLParser.FLOAT, 0); }
-		public TypeModifiersContext typeModifiers() {
-			return getRuleContext(TypeModifiersContext.class,0);
-		}
-		public TypeFloatContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeRealContext extends BaseTypeContext {
-		public TerminalNode REAL() { return getToken(PostgreSQLParser.REAL, 0); }
-		public TypeRealContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeTextContext extends BaseTypeContext {
+		public TerminalNode CHAR() { return getToken(PostgreSQLParser.CHAR, 0); }
 		public TerminalNode TEXT() { return getToken(PostgreSQLParser.TEXT, 0); }
-		public TypeTextContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeTimeContext extends BaseTypeContext {
+		public TerminalNode BOOLEAN() { return getToken(PostgreSQLParser.BOOLEAN, 0); }
+		public TerminalNode BOOL() { return getToken(PostgreSQLParser.BOOL, 0); }
+		public TerminalNode DATE() { return getToken(PostgreSQLParser.DATE, 0); }
 		public List<TerminalNode> TIME() { return getTokens(PostgreSQLParser.TIME); }
 		public TerminalNode TIME(int i) {
 			return getToken(PostgreSQLParser.TIME, i);
 		}
-		public TypeModifiersContext typeModifiers() {
-			return getRuleContext(TypeModifiersContext.class,0);
-		}
 		public TerminalNode ZONE() { return getToken(PostgreSQLParser.ZONE, 0); }
 		public TerminalNode WITH() { return getToken(PostgreSQLParser.WITH, 0); }
 		public TerminalNode WITHOUT() { return getToken(PostgreSQLParser.WITHOUT, 0); }
-		public TypeTimeContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeCharContext extends BaseTypeContext {
-		public TerminalNode CHAR() { return getToken(PostgreSQLParser.CHAR, 0); }
-		public TerminalNode CHARACTER() { return getToken(PostgreSQLParser.CHARACTER, 0); }
-		public TypeModifiersContext typeModifiers() {
-			return getRuleContext(TypeModifiersContext.class,0);
+		public TerminalNode TIMESTAMP() { return getToken(PostgreSQLParser.TIMESTAMP, 0); }
+		public TerminalNode INTERVAL() { return getToken(PostgreSQLParser.INTERVAL, 0); }
+		public TerminalNode UUID() { return getToken(PostgreSQLParser.UUID, 0); }
+		public TerminalNode JSON() { return getToken(PostgreSQLParser.JSON, 0); }
+		public TerminalNode JSONB() { return getToken(PostgreSQLParser.JSONB, 0); }
+		public TerminalNode BYTEA() { return getToken(PostgreSQLParser.BYTEA, 0); }
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
 		}
-		public TypeCharContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeBigintContext extends BaseTypeContext {
-		public TerminalNode BIGINT() { return getToken(PostgreSQLParser.BIGINT, 0); }
-		public TypeBigintContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeBigserialContext extends BaseTypeContext {
-		public TerminalNode BIGSERIAL() { return getToken(PostgreSQLParser.BIGSERIAL, 0); }
-		public TypeBigserialContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeBooleanContext extends BaseTypeContext {
-		public TerminalNode BOOLEAN() { return getToken(PostgreSQLParser.BOOLEAN, 0); }
-		public TerminalNode BOOL() { return getToken(PostgreSQLParser.BOOL, 0); }
-		public TypeBooleanContext(BaseTypeContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypeDoubleContext extends BaseTypeContext {
-		public TerminalNode DOUBLE() { return getToken(PostgreSQLParser.DOUBLE, 0); }
-		public TerminalNode PRECISION() { return getToken(PostgreSQLParser.PRECISION, 0); }
-		public TypeDoubleContext(BaseTypeContext ctx) { copyFrom(ctx); }
+		public BaseTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_baseType; }
 	}
 
 	public final BaseTypeContext baseType() throws RecognitionException {
@@ -3764,7 +3366,6 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,81,_ctx) ) {
 			case 1:
-				_localctx = new TypeIntegerContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(610);
@@ -3772,7 +3373,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new TypeIntContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(611);
@@ -3780,7 +3380,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 3:
-				_localctx = new TypeSmallintContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(612);
@@ -3788,7 +3387,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 4:
-				_localctx = new TypeBigintContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(613);
@@ -3796,7 +3394,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 5:
-				_localctx = new TypeSerialContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(614);
@@ -3804,7 +3401,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 6:
-				_localctx = new TypeBigserialContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(615);
@@ -3812,7 +3408,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 7:
-				_localctx = new TypeNumericContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(616);
@@ -3838,7 +3433,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 8:
-				_localctx = new TypeRealContext(_localctx);
 				enterOuterAlt(_localctx, 8);
 				{
 				setState(620);
@@ -3846,7 +3440,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 9:
-				_localctx = new TypeDoubleContext(_localctx);
 				enterOuterAlt(_localctx, 9);
 				{
 				setState(621);
@@ -3856,7 +3449,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 10:
-				_localctx = new TypeFloatContext(_localctx);
 				enterOuterAlt(_localctx, 10);
 				{
 				setState(623);
@@ -3874,7 +3466,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 11:
-				_localctx = new TypeVarcharContext(_localctx);
 				enterOuterAlt(_localctx, 11);
 				{
 				setState(630);
@@ -3910,7 +3501,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 12:
-				_localctx = new TypeCharContext(_localctx);
 				enterOuterAlt(_localctx, 12);
 				{
 				setState(635);
@@ -3936,7 +3526,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 13:
-				_localctx = new TypeTextContext(_localctx);
 				enterOuterAlt(_localctx, 13);
 				{
 				setState(639);
@@ -3944,7 +3533,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 14:
-				_localctx = new TypeBooleanContext(_localctx);
 				enterOuterAlt(_localctx, 14);
 				{
 				setState(640);
@@ -3960,7 +3548,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 15:
-				_localctx = new TypeDateContext(_localctx);
 				enterOuterAlt(_localctx, 15);
 				{
 				setState(641);
@@ -3968,7 +3555,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 16:
-				_localctx = new TypeTimeContext(_localctx);
 				enterOuterAlt(_localctx, 16);
 				{
 				setState(642);
@@ -4008,7 +3594,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 17:
-				_localctx = new TypeTimestampContext(_localctx);
 				enterOuterAlt(_localctx, 17);
 				{
 				setState(651);
@@ -4048,7 +3633,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 18:
-				_localctx = new TypeIntervalContext(_localctx);
 				enterOuterAlt(_localctx, 18);
 				{
 				setState(660);
@@ -4056,7 +3640,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 19:
-				_localctx = new TypeUuidContext(_localctx);
 				enterOuterAlt(_localctx, 19);
 				{
 				setState(661);
@@ -4064,7 +3647,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 20:
-				_localctx = new TypeJsonContext(_localctx);
 				enterOuterAlt(_localctx, 20);
 				{
 				setState(662);
@@ -4080,7 +3662,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 21:
-				_localctx = new TypeByteaContext(_localctx);
 				enterOuterAlt(_localctx, 21);
 				{
 				setState(663);
@@ -4088,7 +3669,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 22:
-				_localctx = new TypeUserDefinedContext(_localctx);
 				enterOuterAlt(_localctx, 22);
 				{
 				setState(664);
@@ -4162,7 +3742,7 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class AlterTableStmtContext extends ParserRuleContext {
+	public static class SentenciaAlterTableContext extends ParserRuleContext {
 		public TerminalNode ALTER() { return getToken(PostgreSQLParser.ALTER, 0); }
 		public TerminalNode TABLE() { return getToken(PostgreSQLParser.TABLE, 0); }
 		public QualifiedNameContext qualifiedName() {
@@ -4180,15 +3760,15 @@ public class PostgreSQLParser extends Parser {
 		public TerminalNode COMMA(int i) {
 			return getToken(PostgreSQLParser.COMMA, i);
 		}
-		public AlterTableStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaAlterTableContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_alterTableStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaAlterTable; }
 	}
 
-	public final AlterTableStmtContext alterTableStmt() throws RecognitionException {
-		AlterTableStmtContext _localctx = new AlterTableStmtContext(_ctx, getState());
-		enterRule(_localctx, 96, RULE_alterTableStmt);
+	public final SentenciaAlterTableContext sentenciaAlterTable() throws RecognitionException {
+		SentenciaAlterTableContext _localctx = new SentenciaAlterTableContext(_ctx, getState());
+		enterRule(_localctx, 96, RULE_sentenciaAlterTable);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -4244,18 +3824,8 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class AlterTableActionContext extends ParserRuleContext {
-		public AlterTableActionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_alterTableAction; }
-	 
-		public AlterTableActionContext() { }
-		public void copyFrom(AlterTableActionContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ActionAddColumnContext extends AlterTableActionContext {
+		public IdentifierContext newTable;
+		public IdentifierContext newColumn;
 		public TerminalNode ADD() { return getToken(PostgreSQLParser.ADD, 0); }
 		public ColumnDefContext columnDef() {
 			return getRuleContext(ColumnDefContext.class,0);
@@ -4264,64 +3834,28 @@ public class PostgreSQLParser extends Parser {
 		public TerminalNode IF() { return getToken(PostgreSQLParser.IF, 0); }
 		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
 		public TerminalNode EXISTS() { return getToken(PostgreSQLParser.EXISTS, 0); }
-		public ActionAddColumnContext(AlterTableActionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ActionAddConstraintContext extends AlterTableActionContext {
-		public TerminalNode ADD() { return getToken(PostgreSQLParser.ADD, 0); }
-		public TableConstraintContext tableConstraint() {
-			return getRuleContext(TableConstraintContext.class,0);
-		}
-		public ActionAddConstraintContext(AlterTableActionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ActionRenameColumnContext extends AlterTableActionContext {
-		public IdentifierContext newColumn;
-		public TerminalNode RENAME() { return getToken(PostgreSQLParser.RENAME, 0); }
-		public ColumnNameContext columnName() {
-			return getRuleContext(ColumnNameContext.class,0);
-		}
-		public TerminalNode TO() { return getToken(PostgreSQLParser.TO, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
-		public TerminalNode COLUMN() { return getToken(PostgreSQLParser.COLUMN, 0); }
-		public ActionRenameColumnContext(AlterTableActionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ActionDropColumnContext extends AlterTableActionContext {
 		public TerminalNode DROP() { return getToken(PostgreSQLParser.DROP, 0); }
 		public ColumnNameContext columnName() {
 			return getRuleContext(ColumnNameContext.class,0);
 		}
-		public TerminalNode COLUMN() { return getToken(PostgreSQLParser.COLUMN, 0); }
-		public TerminalNode IF() { return getToken(PostgreSQLParser.IF, 0); }
-		public TerminalNode EXISTS() { return getToken(PostgreSQLParser.EXISTS, 0); }
 		public TerminalNode CASCADE() { return getToken(PostgreSQLParser.CASCADE, 0); }
 		public TerminalNode RESTRICT() { return getToken(PostgreSQLParser.RESTRICT, 0); }
-		public ActionDropColumnContext(AlterTableActionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ActionAlterColumnContext extends AlterTableActionContext {
 		public TerminalNode ALTER() { return getToken(PostgreSQLParser.ALTER, 0); }
-		public ColumnNameContext columnName() {
-			return getRuleContext(ColumnNameContext.class,0);
-		}
 		public AlterColumnActionContext alterColumnAction() {
 			return getRuleContext(AlterColumnActionContext.class,0);
 		}
-		public TerminalNode COLUMN() { return getToken(PostgreSQLParser.COLUMN, 0); }
-		public ActionAlterColumnContext(AlterTableActionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ActionRenameTableContext extends AlterTableActionContext {
-		public IdentifierContext newTable;
+		public TableConstraintContext tableConstraint() {
+			return getRuleContext(TableConstraintContext.class,0);
+		}
 		public TerminalNode RENAME() { return getToken(PostgreSQLParser.RENAME, 0); }
 		public TerminalNode TO() { return getToken(PostgreSQLParser.TO, 0); }
 		public IdentifierContext identifier() {
 			return getRuleContext(IdentifierContext.class,0);
 		}
-		public ActionRenameTableContext(AlterTableActionContext ctx) { copyFrom(ctx); }
+		public AlterTableActionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_alterTableAction; }
 	}
 
 	public final AlterTableActionContext alterTableAction() throws RecognitionException {
@@ -4333,7 +3867,6 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,92,_ctx) ) {
 			case 1:
-				_localctx = new ActionAddColumnContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(690);
@@ -4367,7 +3900,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new ActionDropColumnContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(700);
@@ -4417,7 +3949,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 3:
-				_localctx = new ActionAlterColumnContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(712);
@@ -4439,7 +3970,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 4:
-				_localctx = new ActionAddConstraintContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(719);
@@ -4449,7 +3979,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 5:
-				_localctx = new ActionRenameTableContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(721);
@@ -4457,11 +3986,10 @@ public class PostgreSQLParser extends Parser {
 				setState(722);
 				match(TO);
 				setState(723);
-				((ActionRenameTableContext)_localctx).newTable = identifier();
+				((AlterTableActionContext)_localctx).newTable = identifier();
 				}
 				break;
 			case 6:
-				_localctx = new ActionRenameColumnContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(724);
@@ -4481,7 +4009,7 @@ public class PostgreSQLParser extends Parser {
 				setState(729);
 				match(TO);
 				setState(730);
-				((ActionRenameColumnContext)_localctx).newColumn = identifier();
+				((AlterTableActionContext)_localctx).newColumn = identifier();
 				}
 				break;
 			}
@@ -4499,52 +4027,22 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class AlterColumnActionContext extends ParserRuleContext {
-		public AlterColumnActionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_alterColumnAction; }
-	 
-		public AlterColumnActionContext() { }
-		public void copyFrom(AlterColumnActionContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColActionSetNotNullContext extends AlterColumnActionContext {
-		public TerminalNode SET() { return getToken(PostgreSQLParser.SET, 0); }
-		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
-		public TerminalNode NULL() { return getToken(PostgreSQLParser.NULL, 0); }
-		public ColActionSetNotNullContext(AlterColumnActionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColActionDropNotNullContext extends AlterColumnActionContext {
-		public TerminalNode DROP() { return getToken(PostgreSQLParser.DROP, 0); }
-		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
-		public TerminalNode NULL() { return getToken(PostgreSQLParser.NULL, 0); }
-		public ColActionDropNotNullContext(AlterColumnActionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColActionDropDefaultContext extends AlterColumnActionContext {
-		public TerminalNode DROP() { return getToken(PostgreSQLParser.DROP, 0); }
-		public TerminalNode DEFAULT() { return getToken(PostgreSQLParser.DEFAULT, 0); }
-		public ColActionDropDefaultContext(AlterColumnActionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColActionSetDefaultContext extends AlterColumnActionContext {
 		public TerminalNode SET() { return getToken(PostgreSQLParser.SET, 0); }
 		public TerminalNode DEFAULT() { return getToken(PostgreSQLParser.DEFAULT, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
-		public ColActionSetDefaultContext(AlterColumnActionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColActionSetTypeContext extends AlterColumnActionContext {
+		public TerminalNode DROP() { return getToken(PostgreSQLParser.DROP, 0); }
+		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
+		public TerminalNode NULL() { return getToken(PostgreSQLParser.NULL, 0); }
 		public TerminalNode TYPE() { return getToken(PostgreSQLParser.TYPE, 0); }
 		public DataTypeContext dataType() {
 			return getRuleContext(DataTypeContext.class,0);
 		}
-		public ColActionSetTypeContext(AlterColumnActionContext ctx) { copyFrom(ctx); }
+		public AlterColumnActionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_alterColumnAction; }
 	}
 
 	public final AlterColumnActionContext alterColumnAction() throws RecognitionException {
@@ -4555,7 +4053,6 @@ public class PostgreSQLParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,93,_ctx) ) {
 			case 1:
-				_localctx = new ColActionSetDefaultContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(734);
@@ -4567,7 +4064,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new ColActionDropDefaultContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(737);
@@ -4577,7 +4073,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 3:
-				_localctx = new ColActionSetNotNullContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(739);
@@ -4589,7 +4084,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 4:
-				_localctx = new ColActionDropNotNullContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(742);
@@ -4601,7 +4095,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case 5:
-				_localctx = new ColActionSetTypeContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(745);
@@ -4624,7 +4117,7 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class DropTableStmtContext extends ParserRuleContext {
+	public static class SentenciaDropTableContext extends ParserRuleContext {
 		public TerminalNode DROP() { return getToken(PostgreSQLParser.DROP, 0); }
 		public TerminalNode TABLE() { return getToken(PostgreSQLParser.TABLE, 0); }
 		public QualifiedNameListContext qualifiedNameList() {
@@ -4634,15 +4127,15 @@ public class PostgreSQLParser extends Parser {
 		public TerminalNode EXISTS() { return getToken(PostgreSQLParser.EXISTS, 0); }
 		public TerminalNode CASCADE() { return getToken(PostgreSQLParser.CASCADE, 0); }
 		public TerminalNode RESTRICT() { return getToken(PostgreSQLParser.RESTRICT, 0); }
-		public DropTableStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaDropTableContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_dropTableStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaDropTable; }
 	}
 
-	public final DropTableStmtContext dropTableStmt() throws RecognitionException {
-		DropTableStmtContext _localctx = new DropTableStmtContext(_ctx, getState());
-		enterRule(_localctx, 102, RULE_dropTableStmt);
+	public final SentenciaDropTableContext sentenciaDropTable() throws RecognitionException {
+		SentenciaDropTableContext _localctx = new SentenciaDropTableContext(_ctx, getState());
+		enterRule(_localctx, 102, RULE_sentenciaDropTable);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -4753,15 +4246,15 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class CreateViewStmtContext extends ParserRuleContext {
+	public static class SentenciaCreateViewContext extends ParserRuleContext {
 		public TerminalNode CREATE() { return getToken(PostgreSQLParser.CREATE, 0); }
 		public TerminalNode VIEW() { return getToken(PostgreSQLParser.VIEW, 0); }
 		public QualifiedNameContext qualifiedName() {
 			return getRuleContext(QualifiedNameContext.class,0);
 		}
 		public TerminalNode AS() { return getToken(PostgreSQLParser.AS, 0); }
-		public SelectStmtContext selectStmt() {
-			return getRuleContext(SelectStmtContext.class,0);
+		public SentenciaSelectContext sentenciaSelect() {
+			return getRuleContext(SentenciaSelectContext.class,0);
 		}
 		public TerminalNode OR() { return getToken(PostgreSQLParser.OR, 0); }
 		public TerminalNode REPLACE() { return getToken(PostgreSQLParser.REPLACE, 0); }
@@ -4770,15 +4263,15 @@ public class PostgreSQLParser extends Parser {
 			return getRuleContext(ColumnListContext.class,0);
 		}
 		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public CreateViewStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaCreateViewContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_createViewStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaCreateView; }
 	}
 
-	public final CreateViewStmtContext createViewStmt() throws RecognitionException {
-		CreateViewStmtContext _localctx = new CreateViewStmtContext(_ctx, getState());
-		enterRule(_localctx, 106, RULE_createViewStmt);
+	public final SentenciaCreateViewContext sentenciaCreateView() throws RecognitionException {
+		SentenciaCreateViewContext _localctx = new SentenciaCreateViewContext(_ctx, getState());
+		enterRule(_localctx, 106, RULE_sentenciaCreateView);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -4818,7 +4311,7 @@ public class PostgreSQLParser extends Parser {
 			setState(780);
 			match(AS);
 			setState(781);
-			selectStmt();
+			sentenciaSelect();
 			}
 		}
 		catch (RecognitionException re) {
@@ -4833,7 +4326,7 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class DropViewStmtContext extends ParserRuleContext {
+	public static class SentenciaDropViewContext extends ParserRuleContext {
 		public TerminalNode DROP() { return getToken(PostgreSQLParser.DROP, 0); }
 		public TerminalNode VIEW() { return getToken(PostgreSQLParser.VIEW, 0); }
 		public QualifiedNameListContext qualifiedNameList() {
@@ -4843,15 +4336,15 @@ public class PostgreSQLParser extends Parser {
 		public TerminalNode EXISTS() { return getToken(PostgreSQLParser.EXISTS, 0); }
 		public TerminalNode CASCADE() { return getToken(PostgreSQLParser.CASCADE, 0); }
 		public TerminalNode RESTRICT() { return getToken(PostgreSQLParser.RESTRICT, 0); }
-		public DropViewStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaDropViewContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_dropViewStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaDropView; }
 	}
 
-	public final DropViewStmtContext dropViewStmt() throws RecognitionException {
-		DropViewStmtContext _localctx = new DropViewStmtContext(_ctx, getState());
-		enterRule(_localctx, 108, RULE_dropViewStmt);
+	public final SentenciaDropViewContext sentenciaDropView() throws RecognitionException {
+		SentenciaDropViewContext _localctx = new SentenciaDropViewContext(_ctx, getState());
+		enterRule(_localctx, 108, RULE_sentenciaDropView);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -4906,7 +4399,7 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class CreateIndexStmtContext extends ParserRuleContext {
+	public static class SentenciaCreateIndexContext extends ParserRuleContext {
 		public IdentifierContext indexName;
 		public TerminalNode CREATE() { return getToken(PostgreSQLParser.CREATE, 0); }
 		public TerminalNode INDEX() { return getToken(PostgreSQLParser.INDEX, 0); }
@@ -4930,15 +4423,15 @@ public class PostgreSQLParser extends Parser {
 		public IdentifierContext identifier() {
 			return getRuleContext(IdentifierContext.class,0);
 		}
-		public CreateIndexStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaCreateIndexContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_createIndexStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaCreateIndex; }
 	}
 
-	public final CreateIndexStmtContext createIndexStmt() throws RecognitionException {
-		CreateIndexStmtContext _localctx = new CreateIndexStmtContext(_ctx, getState());
-		enterRule(_localctx, 110, RULE_createIndexStmt);
+	public final SentenciaCreateIndexContext sentenciaCreateIndex() throws RecognitionException {
+		SentenciaCreateIndexContext _localctx = new SentenciaCreateIndexContext(_ctx, getState());
+		enterRule(_localctx, 110, RULE_sentenciaCreateIndex);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -4977,7 +4470,7 @@ public class PostgreSQLParser extends Parser {
 			if (_la==QUOTED_IDENTIFIER || _la==IDENTIFIER) {
 				{
 				setState(803);
-				((CreateIndexStmtContext)_localctx).indexName = identifier();
+				((SentenciaCreateIndexContext)_localctx).indexName = identifier();
 				}
 			}
 
@@ -5126,7 +4619,7 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class DropIndexStmtContext extends ParserRuleContext {
+	public static class SentenciaDropIndexContext extends ParserRuleContext {
 		public TerminalNode DROP() { return getToken(PostgreSQLParser.DROP, 0); }
 		public TerminalNode INDEX() { return getToken(PostgreSQLParser.INDEX, 0); }
 		public QualifiedNameListContext qualifiedNameList() {
@@ -5134,15 +4627,15 @@ public class PostgreSQLParser extends Parser {
 		}
 		public TerminalNode IF() { return getToken(PostgreSQLParser.IF, 0); }
 		public TerminalNode EXISTS() { return getToken(PostgreSQLParser.EXISTS, 0); }
-		public DropIndexStmtContext(ParserRuleContext parent, int invokingState) {
+		public SentenciaDropIndexContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_dropIndexStmt; }
+		@Override public int getRuleIndex() { return RULE_sentenciaDropIndex; }
 	}
 
-	public final DropIndexStmtContext dropIndexStmt() throws RecognitionException {
-		DropIndexStmtContext _localctx = new DropIndexStmtContext(_ctx, getState());
-		enterRule(_localctx, 116, RULE_dropIndexStmt);
+	public final SentenciaDropIndexContext sentenciaDropIndex() throws RecognitionException {
+		SentenciaDropIndexContext _localctx = new SentenciaDropIndexContext(_ctx, getState());
+		enterRule(_localctx, 116, RULE_sentenciaDropIndex);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -5179,71 +4672,33 @@ public class PostgreSQLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class TransactionStmtContext extends ParserRuleContext {
-		public TransactionStmtContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_transactionStmt; }
-	 
-		public TransactionStmtContext() { }
-		public void copyFrom(TransactionStmtContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class RollbackStmtContext extends TransactionStmtContext {
+	public static class SentenciaTransaccionContext extends ParserRuleContext {
+		public TerminalNode BEGIN() { return getToken(PostgreSQLParser.BEGIN, 0); }
+		public TerminalNode TRANSACTION() { return getToken(PostgreSQLParser.TRANSACTION, 0); }
+		public TerminalNode WORK() { return getToken(PostgreSQLParser.WORK, 0); }
+		public TerminalNode COMMIT() { return getToken(PostgreSQLParser.COMMIT, 0); }
 		public TerminalNode ROLLBACK() { return getToken(PostgreSQLParser.ROLLBACK, 0); }
 		public TerminalNode TO() { return getToken(PostgreSQLParser.TO, 0); }
 		public IdentifierContext identifier() {
 			return getRuleContext(IdentifierContext.class,0);
 		}
-		public TerminalNode TRANSACTION() { return getToken(PostgreSQLParser.TRANSACTION, 0); }
-		public TerminalNode WORK() { return getToken(PostgreSQLParser.WORK, 0); }
 		public TerminalNode SAVEPOINT() { return getToken(PostgreSQLParser.SAVEPOINT, 0); }
-		public RollbackStmtContext(TransactionStmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ReleaseStmtContext extends TransactionStmtContext {
 		public TerminalNode RELEASE() { return getToken(PostgreSQLParser.RELEASE, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
+		public SentenciaTransaccionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
 		}
-		public TerminalNode SAVEPOINT() { return getToken(PostgreSQLParser.SAVEPOINT, 0); }
-		public ReleaseStmtContext(TransactionStmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class SavepointStmtContext extends TransactionStmtContext {
-		public TerminalNode SAVEPOINT() { return getToken(PostgreSQLParser.SAVEPOINT, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
-		public SavepointStmtContext(TransactionStmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class BeginStmtContext extends TransactionStmtContext {
-		public TerminalNode BEGIN() { return getToken(PostgreSQLParser.BEGIN, 0); }
-		public TerminalNode TRANSACTION() { return getToken(PostgreSQLParser.TRANSACTION, 0); }
-		public TerminalNode WORK() { return getToken(PostgreSQLParser.WORK, 0); }
-		public BeginStmtContext(TransactionStmtContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class CommitStmtContext extends TransactionStmtContext {
-		public TerminalNode COMMIT() { return getToken(PostgreSQLParser.COMMIT, 0); }
-		public TerminalNode TRANSACTION() { return getToken(PostgreSQLParser.TRANSACTION, 0); }
-		public TerminalNode WORK() { return getToken(PostgreSQLParser.WORK, 0); }
-		public CommitStmtContext(TransactionStmtContext ctx) { copyFrom(ctx); }
+		@Override public int getRuleIndex() { return RULE_sentenciaTransaccion; }
 	}
 
-	public final TransactionStmtContext transactionStmt() throws RecognitionException {
-		TransactionStmtContext _localctx = new TransactionStmtContext(_ctx, getState());
-		enterRule(_localctx, 118, RULE_transactionStmt);
+	public final SentenciaTransaccionContext sentenciaTransaccion() throws RecognitionException {
+		SentenciaTransaccionContext _localctx = new SentenciaTransaccionContext(_ctx, getState());
+		enterRule(_localctx, 118, RULE_sentenciaTransaccion);
 		int _la;
 		try {
 			setState(861);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case BEGIN:
-				_localctx = new BeginStmtContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(835);
@@ -5269,7 +4724,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case COMMIT:
-				_localctx = new CommitStmtContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(839);
@@ -5295,7 +4749,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case ROLLBACK:
-				_localctx = new RollbackStmtContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(843);
@@ -5343,7 +4796,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case SAVEPOINT:
-				_localctx = new SavepointStmtContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(854);
@@ -5353,7 +4805,6 @@ public class PostgreSQLParser extends Parser {
 				}
 				break;
 			case RELEASE:
-				_localctx = new ReleaseStmtContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(856);
@@ -5389,236 +4840,20 @@ public class PostgreSQLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprContext extends ParserRuleContext {
-		public ExprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_expr; }
-	 
-		public ExprContext() { }
-		public void copyFrom(ExprContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class AddSubExprContext extends ExprContext {
 		public Token op;
+		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode PLUS() { return getToken(PostgreSQLParser.PLUS, 0); }
-		public TerminalNode MINUS() { return getToken(PostgreSQLParser.MINUS, 0); }
-		public AddSubExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class TypecastExprContext extends ExprContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode TYPECAST() { return getToken(PostgreSQLParser.TYPECAST, 0); }
-		public DataTypeContext dataType() {
-			return getRuleContext(DataTypeContext.class,0);
-		}
-		public TypecastExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class CastExprContext extends ExprContext {
-		public TerminalNode CAST() { return getToken(PostgreSQLParser.CAST, 0); }
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode AS() { return getToken(PostgreSQLParser.AS, 0); }
-		public DataTypeContext dataType() {
-			return getRuleContext(DataTypeContext.class,0);
 		}
 		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public CastExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class InExprContext extends ExprContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public SentenciaSelectContext sentenciaSelect() {
+			return getRuleContext(SentenciaSelectContext.class,0);
 		}
-		public TerminalNode IN() { return getToken(PostgreSQLParser.IN, 0); }
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public ExprListContext exprList() {
-			return getRuleContext(ExprListContext.class,0);
-		}
-		public SelectStmtContext selectStmt() {
-			return getRuleContext(SelectStmtContext.class,0);
-		}
-		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
-		public InExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class OrExprContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode OR() { return getToken(PostgreSQLParser.OR, 0); }
-		public OrExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ComparisonExprContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public ComparisonOperatorContext comparisonOperator() {
-			return getRuleContext(ComparisonOperatorContext.class,0);
-		}
-		public ComparisonExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class SubqueryExprContext extends ExprContext {
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public SelectStmtContext selectStmt() {
-			return getRuleContext(SelectStmtContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public SubqueryExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ColumnRefExprContext extends ExprContext {
-		public ColumnrefContext columnref() {
-			return getRuleContext(ColumnrefContext.class,0);
-		}
-		public ColumnRefExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ArrayConstructorExprContext extends ExprContext {
-		public TerminalNode ARRAY() { return getToken(PostgreSQLParser.ARRAY, 0); }
-		public TerminalNode LBRACKET() { return getToken(PostgreSQLParser.LBRACKET, 0); }
-		public TerminalNode RBRACKET() { return getToken(PostgreSQLParser.RBRACKET, 0); }
-		public ExprListContext exprList() {
-			return getRuleContext(ExprListContext.class,0);
-		}
-		public ArrayConstructorExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ExistsExprContext extends ExprContext {
-		public TerminalNode EXISTS() { return getToken(PostgreSQLParser.EXISTS, 0); }
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public SelectStmtContext selectStmt() {
-			return getRuleContext(SelectStmtContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public ExistsExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ParenExprContext extends ExprContext {
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public ParenExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ConcatExprContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode CONCAT() { return getToken(PostgreSQLParser.CONCAT, 0); }
-		public ConcatExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class BetweenExprContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode BETWEEN() { return getToken(PostgreSQLParser.BETWEEN, 0); }
-		public TerminalNode AND() { return getToken(PostgreSQLParser.AND, 0); }
-		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
-		public BetweenExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class UnaryExprContext extends ExprContext {
-		public Token op;
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode PLUS() { return getToken(PostgreSQLParser.PLUS, 0); }
-		public TerminalNode MINUS() { return getToken(PostgreSQLParser.MINUS, 0); }
-		public UnaryExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class NotExprContext extends ExprContext {
-		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public NotExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class IsDistinctExprContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode IS() { return getToken(PostgreSQLParser.IS, 0); }
-		public TerminalNode DISTINCT() { return getToken(PostgreSQLParser.DISTINCT, 0); }
-		public TerminalNode FROM() { return getToken(PostgreSQLParser.FROM, 0); }
-		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
-		public IsDistinctExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class IsNullExprContext extends ExprContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode IS() { return getToken(PostgreSQLParser.IS, 0); }
-		public TerminalNode NULL() { return getToken(PostgreSQLParser.NULL, 0); }
-		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
-		public IsNullExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class LiteralExprContext extends ExprContext {
-		public LiteralContext literal() {
-			return getRuleContext(LiteralContext.class,0);
-		}
-		public LiteralExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class LikeExprContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode LIKE() { return getToken(PostgreSQLParser.LIKE, 0); }
-		public TerminalNode ILIKE() { return getToken(PostgreSQLParser.ILIKE, 0); }
-		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
-		public LikeExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class CaseExprContext extends ExprContext {
 		public TerminalNode CASE() { return getToken(PostgreSQLParser.CASE, 0); }
 		public TerminalNode END() { return getToken(PostgreSQLParser.END, 0); }
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
 		public List<WhenClauseContext> whenClause() {
 			return getRuleContexts(WhenClauseContext.class);
 		}
@@ -5626,50 +4861,52 @@ public class PostgreSQLParser extends Parser {
 			return getRuleContext(WhenClauseContext.class,i);
 		}
 		public TerminalNode ELSE() { return getToken(PostgreSQLParser.ELSE, 0); }
-		public CaseExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class SubqueryComparisonExprContext extends ExprContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public TerminalNode CAST() { return getToken(PostgreSQLParser.CAST, 0); }
+		public TerminalNode AS() { return getToken(PostgreSQLParser.AS, 0); }
+		public DataTypeContext dataType() {
+			return getRuleContext(DataTypeContext.class,0);
 		}
-		public ComparisonOperatorContext comparisonOperator() {
-			return getRuleContext(ComparisonOperatorContext.class,0);
+		public TerminalNode EXISTS() { return getToken(PostgreSQLParser.EXISTS, 0); }
+		public ColumnrefContext columnref() {
+			return getRuleContext(ColumnrefContext.class,0);
 		}
-		public TerminalNode LPAREN() { return getToken(PostgreSQLParser.LPAREN, 0); }
-		public SelectStmtContext selectStmt() {
-			return getRuleContext(SelectStmtContext.class,0);
+		public LiteralContext literal() {
+			return getRuleContext(LiteralContext.class,0);
 		}
-		public TerminalNode RPAREN() { return getToken(PostgreSQLParser.RPAREN, 0); }
-		public TerminalNode ANY() { return getToken(PostgreSQLParser.ANY, 0); }
-		public TerminalNode SOME() { return getToken(PostgreSQLParser.SOME, 0); }
-		public TerminalNode ALL() { return getToken(PostgreSQLParser.ALL, 0); }
-		public SubqueryComparisonExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class MulDivExprContext extends ExprContext {
-		public Token op;
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
+		public TerminalNode PLUS() { return getToken(PostgreSQLParser.PLUS, 0); }
+		public TerminalNode MINUS() { return getToken(PostgreSQLParser.MINUS, 0); }
+		public TerminalNode ARRAY() { return getToken(PostgreSQLParser.ARRAY, 0); }
+		public TerminalNode LBRACKET() { return getToken(PostgreSQLParser.LBRACKET, 0); }
+		public TerminalNode RBRACKET() { return getToken(PostgreSQLParser.RBRACKET, 0); }
+		public ExprListContext exprList() {
+			return getRuleContext(ExprListContext.class,0);
 		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
+		public TerminalNode NOT() { return getToken(PostgreSQLParser.NOT, 0); }
 		public TerminalNode STAR() { return getToken(PostgreSQLParser.STAR, 0); }
 		public TerminalNode SLASH() { return getToken(PostgreSQLParser.SLASH, 0); }
 		public TerminalNode PERCENT() { return getToken(PostgreSQLParser.PERCENT, 0); }
-		public MulDivExprContext(ExprContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class AndExprContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
+		public TerminalNode CONCAT() { return getToken(PostgreSQLParser.CONCAT, 0); }
+		public ComparisonOperatorContext comparisonOperator() {
+			return getRuleContext(ComparisonOperatorContext.class,0);
 		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
+		public TerminalNode BETWEEN() { return getToken(PostgreSQLParser.BETWEEN, 0); }
 		public TerminalNode AND() { return getToken(PostgreSQLParser.AND, 0); }
-		public AndExprContext(ExprContext ctx) { copyFrom(ctx); }
+		public TerminalNode LIKE() { return getToken(PostgreSQLParser.LIKE, 0); }
+		public TerminalNode ILIKE() { return getToken(PostgreSQLParser.ILIKE, 0); }
+		public TerminalNode IS() { return getToken(PostgreSQLParser.IS, 0); }
+		public TerminalNode DISTINCT() { return getToken(PostgreSQLParser.DISTINCT, 0); }
+		public TerminalNode FROM() { return getToken(PostgreSQLParser.FROM, 0); }
+		public TerminalNode OR() { return getToken(PostgreSQLParser.OR, 0); }
+		public TerminalNode TYPECAST() { return getToken(PostgreSQLParser.TYPECAST, 0); }
+		public TerminalNode ANY() { return getToken(PostgreSQLParser.ANY, 0); }
+		public TerminalNode SOME() { return getToken(PostgreSQLParser.SOME, 0); }
+		public TerminalNode ALL() { return getToken(PostgreSQLParser.ALL, 0); }
+		public TerminalNode IN() { return getToken(PostgreSQLParser.IN, 0); }
+		public TerminalNode NULL() { return getToken(PostgreSQLParser.NULL, 0); }
+		public ExprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expr; }
 	}
 
 	public final ExprContext expr() throws RecognitionException {
@@ -5693,10 +4930,6 @@ public class PostgreSQLParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,119,_ctx) ) {
 			case 1:
 				{
-				_localctx = new ParenExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-
 				setState(864);
 				match(LPAREN);
 				setState(865);
@@ -5707,22 +4940,16 @@ public class PostgreSQLParser extends Parser {
 				break;
 			case 2:
 				{
-				_localctx = new SubqueryExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(868);
 				match(LPAREN);
 				setState(869);
-				selectStmt();
+				sentenciaSelect();
 				setState(870);
 				match(RPAREN);
 				}
 				break;
 			case 3:
 				{
-				_localctx = new CaseExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(872);
 				match(CASE);
 				setState(874);
@@ -5767,9 +4994,6 @@ public class PostgreSQLParser extends Parser {
 				break;
 			case 4:
 				{
-				_localctx = new CastExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(887);
 				match(CAST);
 				setState(888);
@@ -5786,47 +5010,35 @@ public class PostgreSQLParser extends Parser {
 				break;
 			case 5:
 				{
-				_localctx = new ExistsExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(894);
 				match(EXISTS);
 				setState(895);
 				match(LPAREN);
 				setState(896);
-				selectStmt();
+				sentenciaSelect();
 				setState(897);
 				match(RPAREN);
 				}
 				break;
 			case 6:
 				{
-				_localctx = new ColumnRefExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(899);
 				columnref();
 				}
 				break;
 			case 7:
 				{
-				_localctx = new LiteralExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(900);
 				literal();
 				}
 				break;
 			case 8:
 				{
-				_localctx = new UnaryExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(901);
-				((UnaryExprContext)_localctx).op = _input.LT(1);
+				((ExprContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==PLUS || _la==MINUS) ) {
-					((UnaryExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+					((ExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -5839,9 +5051,6 @@ public class PostgreSQLParser extends Parser {
 				break;
 			case 9:
 				{
-				_localctx = new ArrayConstructorExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(903);
 				match(ARRAY);
 				setState(904);
@@ -5862,9 +5071,6 @@ public class PostgreSQLParser extends Parser {
 				break;
 			case 10:
 				{
-				_localctx = new NotExprContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(909);
 				match(NOT);
 				setState(910);
@@ -5886,15 +5092,15 @@ public class PostgreSQLParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,126,_ctx) ) {
 					case 1:
 						{
-						_localctx = new MulDivExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(913);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
 						setState(914);
-						((MulDivExprContext)_localctx).op = _input.LT(1);
+						((ExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(((((_la - 133)) & ~0x3f) == 0 && ((1L << (_la - 133)) & 7L) != 0)) ) {
-							((MulDivExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -5907,15 +5113,15 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new AddSubExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(916);
 						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
 						setState(917);
-						((AddSubExprContext)_localctx).op = _input.LT(1);
+						((ExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==PLUS || _la==MINUS) ) {
-							((AddSubExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -5928,7 +5134,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 3:
 						{
-						_localctx = new ConcatExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(919);
 						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
@@ -5940,7 +5146,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 4:
 						{
-						_localctx = new ComparisonExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(922);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
@@ -5952,7 +5158,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 5:
 						{
-						_localctx = new BetweenExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(926);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
@@ -5978,7 +5184,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 6:
 						{
-						_localctx = new LikeExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(935);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
@@ -6008,7 +5214,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 7:
 						{
-						_localctx = new IsDistinctExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(941);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
@@ -6034,7 +5240,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 8:
 						{
-						_localctx = new AndExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(949);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
@@ -6046,7 +5252,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 9:
 						{
-						_localctx = new OrExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(952);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
@@ -6058,7 +5264,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 10:
 						{
-						_localctx = new TypecastExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(955);
 						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
@@ -6070,7 +5276,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 11:
 						{
-						_localctx = new SubqueryComparisonExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(958);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
@@ -6089,14 +5295,14 @@ public class PostgreSQLParser extends Parser {
 						setState(961);
 						match(LPAREN);
 						setState(962);
-						selectStmt();
+						sentenciaSelect();
 						setState(963);
 						match(RPAREN);
 						}
 						break;
 					case 12:
 						{
-						_localctx = new InExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(965);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
@@ -6126,7 +5332,7 @@ public class PostgreSQLParser extends Parser {
 						case 2:
 							{
 							setState(972);
-							selectStmt();
+							sentenciaSelect();
 							}
 							break;
 						}
@@ -6136,7 +5342,7 @@ public class PostgreSQLParser extends Parser {
 						break;
 					case 13:
 						{
-						_localctx = new IsNullExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(977);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
