@@ -49,5 +49,10 @@ RUN printf '#!/bin/sh\nexec java -jar /usr/local/lib/antlr.jar "$@"\n' \
     > /usr/local/bin/antlr4 && \
     chmod +x /usr/local/bin/antlr4
 
+# Crear atajo gen-pg: regenera Lexer+Parser de PostgreSQL desde grammar/ hacia app/
+RUN printf '#!/bin/sh\nexec antlr4 -Dlanguage=Python3 -visitor -no-listener -o app grammar/PostgreSQLLexer.g4 grammar/PostgreSQLParser.g4\n' \
+    > /usr/local/bin/gen-pg && \
+    chmod +x /usr/local/bin/gen-pg
+
 # Mantener vivo el contenedor
 CMD ["tail", "-f", "/dev/null"]
